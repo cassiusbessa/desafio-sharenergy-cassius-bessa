@@ -77,4 +77,11 @@ describe('Address', () => {
       'Country must have at least 3 characters',
     );
   });
+
+  it("8 - shouldn't be able to create a Address with zipcode less than 8 characters", () => {
+    const sutProps: AddressProps = { ...anyAddressProps, zipcode: '1234567' };
+    expect(() => new Address(sutProps)).toThrowError(
+      'Zipcode must have at least 8 characters',
+    );
+  });
 });
