@@ -15,6 +15,7 @@ export class Address {
   constructor(props: AddressProps) {
     this.props = props;
     this.validateStreetLength(props.street);
+    this.validateNumberLength(props.number);
   }
 
   get street(): string {
@@ -23,12 +24,18 @@ export class Address {
 
   private validateStreetLength(street: string) {
     if (street.length < 1) {
-      throw new Error('Street must have at least 1 characters');
+      throw new Error('Street must have at least 1 character');
     }
   }
 
   get number(): string {
     return this.props.number;
+  }
+
+  private validateNumberLength(number: string) {
+    if (number.length < 1) {
+      throw new Error('Number must have at least 1 character');
+    }
   }
 
   get complement(): string {
