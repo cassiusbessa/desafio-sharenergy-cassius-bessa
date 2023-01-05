@@ -187,4 +187,54 @@ describe('Customer', () => {
     const sut = new SutFactory(sutProps);
     expect(() => sut.makeSut()).not.toThrow();
   });
+
+  it('14 - should be able update a Customer', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const customer = sut.makeSut();
+    const newProps: CustomerProps = {
+      ...anyCustomerProps,
+      name: 'new_valid_name',
+      email: 'new_valid_email',
+      phone: 'new_valid_phone',
+      cpf: 'new_valid_cpf',
+      address: new Address(anyAddressProps),
+    };
+    customer.updateProps(newProps);
+    expect(customer).toMatchObject(newProps);
+  });
+
+  it('15 - must call all validations with correct values when updating a Customer', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const customer = sut.makeSut();
+    const newProps: CustomerProps = {
+      ...anyCustomerProps,
+      name: 'new_valid_name',
+      email: 'new_valid_email',
+      phone: 'new_valid_phone',
+      cpf: 'new_valid_cpf',
+      address: new Address(anyAddressProps),
+    };
+    const cpfSpy = jest.spyOn(sut.cpfValidatorStub, 'isValid');
+    const emailSpy = jest.spyOn(sut.emailValidatorStub, 'isValid');
+    const phoneSpy = jest.spyOn(sut.phoneValidatorStub, 'isValid');
+    customer.updateProps(newProps);
+    expect(cpfSpy).toHaveBeenCalledWith(newProps.cpf);
+    expect(emailSpy).toHaveBeenCalledWith(newProps.email);
+    expect(phoneSpy).toHaveBeenCalledWith(newProps.phone);
+  });
+
+  it('16 - should not be able to update a Customer with name with less than 3 characters', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const customer = sut.makeSut();
+    const newProps: CustomerProps = {
+      ...anyCustomerProps,
+      name: 'ab',
+    };
+    expect(() => customer.updateProps(newProps)).toThrowError(
+      'Name must have at least 3 characters',
+    );
+  });
 });
