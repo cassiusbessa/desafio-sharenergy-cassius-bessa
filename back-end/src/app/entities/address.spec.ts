@@ -56,4 +56,11 @@ describe('Address', () => {
       'Neighborhood must have at least 3 characters',
     );
   });
+
+  it("5 - shouldn't be able to create a Address with city less than 3 characters", () => {
+    const sutProps: AddressProps = { ...anyAddressProps, city: '12' };
+    expect(() => new Address(sutProps)).toThrowError(
+      'City must have at least 3 characters',
+    );
+  });
 });
