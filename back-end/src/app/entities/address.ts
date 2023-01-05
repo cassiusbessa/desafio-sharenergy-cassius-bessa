@@ -16,6 +16,7 @@ export class Address {
     this.props = props;
     this.validateStreetLength(props.street);
     this.validateNumberLength(props.number);
+    this.validateNeighborhoodLength(props.neighborhood);
   }
 
   get street(): string {
@@ -44,6 +45,12 @@ export class Address {
 
   get neighborhood(): string {
     return this.props.neighborhood;
+  }
+
+  private validateNeighborhoodLength(neighborhood: string) {
+    if (neighborhood.length < 3) {
+      throw new Error('Neighborhood must have at least 3 characters');
+    }
   }
 
   get city(): string {
