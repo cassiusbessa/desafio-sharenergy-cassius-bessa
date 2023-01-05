@@ -1,3 +1,4 @@
+import { CpfValidator } from '../protocols/cpf-validator';
 import { EmailValidator } from '../protocols/email-validator';
 import { PhoneValidator } from '../protocols/phone-validator';
 
@@ -13,18 +14,22 @@ export class Customer {
   private props: CustomerProps;
   private readonly emailValidator: EmailValidator;
   private readonly phoneValidator: PhoneValidator;
+  private readonly cpfValidator: CpfValidator;
 
   constructor(
     props: CustomerProps,
     emailValidator: EmailValidator,
     phoneValidator: PhoneValidator,
+    cpfValidator: CpfValidator,
   ) {
     this.emailValidator = emailValidator;
     this.phoneValidator = phoneValidator;
+    this.cpfValidator = cpfValidator;
     this.props = props;
     this.validateNameLength(props.name);
     this.validateEmail(props.email);
     this.validatePhone(props.phone);
+    this.validateCpf(props.cpf);
   }
 
   get name(): string {
@@ -59,6 +64,12 @@ export class Customer {
 
   get cpf(): string {
     return this.props.cpf;
+  }
+
+  private validateCpf(cpf: string) {
+    if (!this.cpfValidator.isValid(cpf)) {
+      throw new Error('Invalid cpf');
+    }
   }
 
   get address(): string {
