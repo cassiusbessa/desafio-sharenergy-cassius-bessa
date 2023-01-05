@@ -36,10 +36,17 @@ describe('Address', () => {
     expect(sut).toBeTruthy();
   });
 
-  it("shouldn't be able to create a Address with less than 1 characters", () => {
+  it("2 - shouldn't be able to create a Address with street less than 1 characters", () => {
     const sutProps: AddressProps = { ...anyAddressProps, street: '' };
     expect(() => new Address(sutProps)).toThrowError(
-      'Street must have at least 1 characters',
+      'Street must have at least 1 character',
+    );
+  });
+
+  it("3 - shouldn't be able to create a Address with number less than 1 characters", () => {
+    const sutProps: AddressProps = { ...anyAddressProps, number: '' };
+    expect(() => new Address(sutProps)).toThrowError(
+      'Number must have at least 1 character',
     );
   });
 });
