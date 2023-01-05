@@ -70,4 +70,11 @@ describe('Address', () => {
       'State must have at least 2 characters',
     );
   });
+
+  it("7 - shouldn't be able to create a Address with country less than 3 characters", () => {
+    const sutProps: AddressProps = { ...anyAddressProps, country: '12' };
+    expect(() => new Address(sutProps)).toThrowError(
+      'Country must have at least 3 characters',
+    );
+  });
 });
