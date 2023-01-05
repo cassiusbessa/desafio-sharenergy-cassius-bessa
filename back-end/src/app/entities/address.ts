@@ -14,10 +14,17 @@ export class Address {
 
   constructor(props: AddressProps) {
     this.props = props;
+    this.validateStreetLength(props.street);
   }
 
   get street(): string {
     return this.props.street;
+  }
+
+  private validateStreetLength(street: string) {
+    if (street.length < 1) {
+      throw new Error('Street must have at least 1 characters');
+    }
   }
 
   get number(): string {
