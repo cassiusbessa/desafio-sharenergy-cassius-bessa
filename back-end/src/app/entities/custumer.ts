@@ -11,10 +11,18 @@ export class Custumer {
 
   constructor(props: CustumerProps) {
     this.props = props;
+    this.validateNameLength(props.name);
   }
 
   get name(): string {
     return this.props.name;
+  }
+
+  validateNameLength(name: string) {
+    console.log('name.length', name.length);
+    if (name.length < 3) {
+      throw new Error('Name must have at least 3 characters');
+    }
   }
 
   get email(): string {
