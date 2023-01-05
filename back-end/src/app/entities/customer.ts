@@ -1,6 +1,7 @@
 import { EmailValidator } from '../protocols/email-validator';
+import { PhoneValidator } from '../protocols/phone-validator';
 
-export interface CustumerProps {
+export interface CustomerProps {
   name: string;
   email: string;
   phone: string;
@@ -8,15 +9,22 @@ export interface CustumerProps {
   address: string;
 }
 
-export class Custumer {
-  private props: CustumerProps;
+export class Customer {
+  private props: CustomerProps;
   private readonly emailValidator: EmailValidator;
+  private readonly phoneValidator: PhoneValidator;
 
-  constructor(props: CustumerProps, emailValidator: EmailValidator) {
+  constructor(
+    props: CustomerProps,
+    emailValidator: EmailValidator,
+    phoneValidator: PhoneValidator,
+  ) {
     this.emailValidator = emailValidator;
+    this.phoneValidator = phoneValidator;
     this.props = props;
-    this.validateEmail(props.email);
     this.validateNameLength(props.name);
+    this.validateEmail(props.email);
+    this.validatePhone(props.phone);
   }
 
   get name(): string {
@@ -41,6 +49,12 @@ export class Custumer {
 
   get phone(): string {
     return this.props.phone;
+  }
+
+  private validatePhone(phone: string) {
+    if (!this.phoneValidator.isValid(phone)) {
+      throw new Error('Invalid phone');
+    }
   }
 
   get cpf(): string {
