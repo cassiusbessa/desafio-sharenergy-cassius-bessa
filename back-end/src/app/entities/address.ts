@@ -20,6 +20,7 @@ export class Address {
     this.validateCityLength(props.city);
     this.validateStateLength(props.state);
     this.validateCountryLength(props.country);
+    this.validateZipcodeLength(props.zipcode);
   }
 
   get street(): string {
@@ -88,5 +89,11 @@ export class Address {
 
   get zipcode(): string {
     return this.props.zipcode;
+  }
+
+  public validateZipcodeLength(zipcode: string) {
+    if (zipcode.length < 8) {
+      throw new Error('Zipcode must have at least 8 characters');
+    }
   }
 }
