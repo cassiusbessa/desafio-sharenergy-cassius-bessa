@@ -36,12 +36,25 @@ describe('Custumer', () => {
 
   it('2 - should not be able to create a custume name with less than 3 characters', () => {
     const sutProps: CustumerProps = {
-      name: 'na',
+      name: '12',
       email: 'valid_email',
       phone: 'valid_phone',
       cpf: 'valid_cpf',
       address: 'valid_address',
     };
     expect(() => new Custumer(sutProps, makeEmailValidator())).toThrowError();
+  });
+
+  it('3 - should throw if emailValidator.isValid returns false', () => {
+    const sutProps: CustumerProps = {
+      name: 'any_name',
+      email: 'invalid_email',
+      phone: 'any_phone',
+      cpf: 'any_cpf',
+      address: 'any_address',
+    };
+    const { emailValidatorStub } = makeSut(sutProps);
+    jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
+    expect(() => new Custumer(sutProps, emailValidatorStub)).toThrowError();
   });
 });
