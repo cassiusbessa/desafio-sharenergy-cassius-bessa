@@ -57,4 +57,19 @@ describe('Custumer', () => {
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
     expect(() => new Custumer(sutProps, emailValidatorStub)).toThrowError();
   });
+
+  it('4 - should throw if emailValidator.isValid throws', () => {
+    const sutProps: CustumerProps = {
+      name: 'any_name',
+      email: 'any_email',
+      phone: 'any_phone',
+      cpf: 'any_cpf',
+      address: 'any_address',
+    };
+    const { emailValidatorStub } = makeSut(sutProps);
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    expect(() => new Custumer(sutProps, emailValidatorStub)).toThrowError();
+  });
 });
