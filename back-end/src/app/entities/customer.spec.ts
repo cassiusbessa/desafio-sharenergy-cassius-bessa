@@ -261,4 +261,25 @@ describe('Customer', () => {
         ),
     ).toThrowError('Internal error');
   });
+
+  it("11 - shouldn't throw if cpfValidator.isValid returns true", () => {
+    const sutProps: CustomerProps = {
+      name: 'any_name',
+      email: 'any_email',
+      phone: 'any_phone',
+      cpf: 'valid_cpf',
+      address: 'any_address',
+    };
+    const { cpfValidatorStub, emailValidatorStub, phoneValidatorStub } =
+      makeSut(sutProps);
+    expect(
+      () =>
+        new Customer(
+          sutProps,
+          emailValidatorStub,
+          phoneValidatorStub,
+          cpfValidatorStub,
+        ),
+    ).not.toThrow();
+  });
 });
