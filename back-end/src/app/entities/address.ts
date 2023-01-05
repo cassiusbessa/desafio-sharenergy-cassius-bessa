@@ -96,4 +96,8 @@ export class Address {
       throw new Error('Zipcode must have at least 8 characters');
     }
   }
+
+  public getFullAddress(): string {
+    return `${this.street}, ${this.number}, ${this.complement}, ${this.neighborhood}, ${this.city}, ${this.state}, ${this.country}, ${this.zipcode}`;
+  }
 }
