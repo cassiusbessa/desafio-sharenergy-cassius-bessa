@@ -84,4 +84,11 @@ describe('Address', () => {
       'Zipcode must have at least 8 characters',
     );
   });
+
+  it('9 - should be able to get the full address', () => {
+    const { sut } = makeSut();
+    expect(sut.getFullAddress()).toBe(
+      'any_street, any_number, any_complement, any_neighborhood, any_city, any_state, any_country, any_zipcode',
+    );
+  });
 });
