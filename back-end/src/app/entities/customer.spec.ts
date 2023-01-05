@@ -64,7 +64,7 @@ describe('Customer', () => {
     };
     expect(
       () => new Customer(sutProps, makeEmailValidator(), makePhoneValidator()),
-    ).toThrowError();
+    ).toThrowError('Name must have at least 3 characters');
   });
 
   it('3 - should throw if emailValidator.isValid returns false', () => {
@@ -79,7 +79,7 @@ describe('Customer', () => {
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
     expect(
       () => new Customer(sutProps, emailValidatorStub, makePhoneValidator()),
-    ).toThrowError();
+    ).toThrowError('Invalid email');
   });
 
   it('4 - should throw if emailValidator.isValid throws', () => {
@@ -90,13 +90,13 @@ describe('Customer', () => {
       cpf: 'any_cpf',
       address: 'any_address',
     };
-    const { emailValidatorStub } = makeSut(sutProps);
+    const { emailValidatorStub, phoneValidatorStub } = makeSut(sutProps);
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
-      throw new Error();
+      throw new Error('Internal error');
     });
     expect(
-      () => new Customer(sutProps, emailValidatorStub, makePhoneValidator()),
-    ).toThrowError();
+      () => new Customer(sutProps, emailValidatorStub, phoneValidatorStub),
+    ).toThrowError('Internal error');
   });
 
   it("5 - shouldn't throw if emailValidator.isValid returns true", () => {
@@ -121,10 +121,10 @@ describe('Customer', () => {
       cpf: 'any_cpf',
       address: 'any_address',
     };
-    const { phoneValidatorStub } = makeSut(sutProps);
+    const { phoneValidatorStub, emailValidatorStub } = makeSut(sutProps);
     jest.spyOn(phoneValidatorStub, 'isValid').mockReturnValueOnce(false);
     expect(
-      () => new Customer(sutProps, phoneValidatorStub, makePhoneValidator()),
-    ).toThrowError();
+      () => new Customer(sutProps, emailValidatorStub, phoneValidatorStub),
+    ).toThrowError('Invalid phone');
   });
 });
