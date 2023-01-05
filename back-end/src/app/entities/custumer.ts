@@ -1,3 +1,5 @@
+import { EmailValidator } from '../protocols/email-validator';
+
 export interface CustumerProps {
   name: string;
   email: string;
@@ -8,9 +10,12 @@ export interface CustumerProps {
 
 export class Custumer {
   private props: CustumerProps;
+  private readonly emailValidator: EmailValidator;
 
-  constructor(props: CustumerProps) {
+  constructor(props: CustumerProps, emailValidator: EmailValidator) {
+    this.emailValidator = emailValidator;
     this.props = props;
+    this.validateEmail(props.email);
     this.validateNameLength(props.name);
   }
 
@@ -18,8 +23,7 @@ export class Custumer {
     return this.props.name;
   }
 
-  validateNameLength(name: string) {
-    console.log('name.length', name.length);
+  private validateNameLength(name: string) {
     if (name.length < 3) {
       throw new Error('Name must have at least 3 characters');
     }
@@ -27,6 +31,12 @@ export class Custumer {
 
   get email(): string {
     return this.props.email;
+  }
+
+  private validateEmail(email: string) {
+    if (!this.emailValidator.isValid(email)) {
+      throw new Error('Invalid email');
+    }
   }
 
   get phone(): string {
