@@ -49,4 +49,11 @@ describe('Address', () => {
       'Number must have at least 1 character',
     );
   });
+
+  it("4 - shouldn't be able to create a Address with neighborhood less than 3 characters", () => {
+    const sutProps: AddressProps = { ...anyAddressProps, neighborhood: '12' };
+    expect(() => new Address(sutProps)).toThrowError(
+      'Neighborhood must have at least 3 characters',
+    );
+  });
 });
