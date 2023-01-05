@@ -63,4 +63,11 @@ describe('Address', () => {
       'City must have at least 3 characters',
     );
   });
+
+  it("6 - shouldn't be able to create a Address with state less than 2 characters", () => {
+    const sutProps: AddressProps = { ...anyAddressProps, state: '1' };
+    expect(() => new Address(sutProps)).toThrowError(
+      'State must have at least 2 characters',
+    );
+  });
 });
