@@ -127,4 +127,21 @@ describe('Customer', () => {
       () => new Customer(sutProps, emailValidatorStub, phoneValidatorStub),
     ).toThrowError('Invalid phone');
   });
+
+  it('7 - should throw if phoneValidator.isValid throws', () => {
+    const sutProps: CustomerProps = {
+      name: 'any_name',
+      email: 'any_email',
+      phone: 'any_phone',
+      cpf: 'any_cpf',
+      address: 'any_address',
+    };
+    const { phoneValidatorStub, emailValidatorStub } = makeSut(sutProps);
+    jest.spyOn(phoneValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error('Internal error');
+    });
+    expect(
+      () => new Customer(sutProps, emailValidatorStub, phoneValidatorStub),
+    ).toThrowError('Internal error');
+  });
 });
