@@ -237,4 +237,28 @@ describe('Customer', () => {
         ),
     ).toThrowError('Invalid cpf');
   });
+
+  it('10 - should throw if cpfValidator.isValid throws', () => {
+    const sutProps: CustomerProps = {
+      name: 'any_name',
+      email: 'any_email',
+      phone: 'any_phone',
+      cpf: 'any_cpf',
+      address: 'any_address',
+    };
+    const { cpfValidatorStub, emailValidatorStub, phoneValidatorStub } =
+      makeSut(sutProps);
+    jest.spyOn(cpfValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error('Internal error');
+    });
+    expect(
+      () =>
+        new Customer(
+          sutProps,
+          emailValidatorStub,
+          phoneValidatorStub,
+          cpfValidatorStub,
+        ),
+    ).toThrowError('Internal error');
+  });
 });
