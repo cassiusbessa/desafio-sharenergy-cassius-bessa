@@ -1,11 +1,12 @@
 import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
+import { Address } from './address';
 
 export interface CustomerProps {
   name: string;
   email: string;
   phone: string;
   cpf: string;
-  address: string;
+  address: Address;
 }
 
 export class Customer {
@@ -70,7 +71,7 @@ export class Customer {
     }
   }
 
-  get address(): string {
+  get address(): Address {
     return this.props.address;
   }
 }

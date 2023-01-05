@@ -1,6 +1,6 @@
 import { Address, AddressProps } from './address';
 
-const anyAddressProps: AddressProps = {
+export const anyAddressProps: AddressProps = {
   street: 'any_street',
   number: 'any_number',
   complement: 'any_complement',

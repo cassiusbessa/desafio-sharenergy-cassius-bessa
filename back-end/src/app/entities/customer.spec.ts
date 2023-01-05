@@ -1,5 +1,7 @@
+import { anyAddressProps } from './address.spec';
 import { Customer, CustomerProps } from './customer';
 import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
+import { Address } from './address';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -33,7 +35,7 @@ const anyCustomerProps: CustomerProps = {
   email: 'any_email',
   phone: 'any_phone',
   cpf: 'any_cpf',
-  address: 'any_address',
+  address: new Address(anyAddressProps),
 };
 
 interface SutTypes {
@@ -64,7 +66,7 @@ describe('Customer', () => {
       email: 'valid_email',
       phone: 'valid_phone',
       cpf: 'valid_cpf',
-      address: 'valid_address',
+      address: new Address(anyAddressProps),
     };
     const { sut } = makeSut(sutProps);
     expect(sut).toBeTruthy();
