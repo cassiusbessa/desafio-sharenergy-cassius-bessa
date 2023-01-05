@@ -75,18 +75,21 @@ describe('Customer', () => {
 
   it('2 - should not be able to create a Customer name with less than 3 characters', () => {
     const sutProps: CustomerProps = { ...anyCustomerProps, name: '12' };
-    expect(
-      () =>
-        new Customer(
-          sutProps,
-          makeEmailValidator(),
-          makePhoneValidator(),
-          makeCpfValidator(),
-        ),
-    ).toThrowError('Name must have at least 3 characters');
+    const sut = new SutFactory(sutProps);
+    expect(() => sut.makeSut()).toThrowError(
+      'Name must have at least 3 characters',
+    );
   });
 
-  it('3 - should throw if emailValidator.isValid returns false', () => {
+  it('3 - should emailValidator.isValid calls with correct email', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const isValidSpy = jest.spyOn(sut.emailValidatorStub, 'isValid');
+    sut.makeSut();
+    expect(isValidSpy).toHaveBeenCalledWith(sutProps.email);
+  });
+
+  it('4 - should throw if emailValidator.isValid returns false', () => {
     const sutProps: CustomerProps = {
       ...anyCustomerProps,
       email: 'invalid_email',
@@ -96,7 +99,7 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).toThrowError('Invalid email');
   });
 
-  it('4 - should throw if emailValidator.isValid throws', () => {
+  it('5 - should throw if emailValidator.isValid throws', () => {
     const sutProps: CustomerProps = anyCustomerProps;
     const sut = new SutFactory(sutProps);
     jest.spyOn(sut.emailValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -105,7 +108,7 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).toThrowError('Internal error');
   });
 
-  it("5 - shouldn't throw if emailValidator.isValid returns true", () => {
+  it("6 - shouldn't throw if emailValidator.isValid returns true", () => {
     const sutProps: CustomerProps = {
       ...anyCustomerProps,
       email: 'valid_email',
@@ -114,7 +117,15 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).not.toThrow();
   });
 
-  it('6 - should throw if phoneValidator.isValid returns false', () => {
+  it('7 - should phoneValidator.isValid calls with correct phone', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const isValidSpy = jest.spyOn(sut.phoneValidatorStub, 'isValid');
+    sut.makeSut();
+    expect(isValidSpy).toHaveBeenCalledWith(sutProps.phone);
+  });
+
+  it('8 - should throw if phoneValidator.isValid returns false', () => {
     const sutProps: CustomerProps = {
       ...anyCustomerProps,
       phone: 'invalid_phone',
@@ -124,7 +135,7 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).toThrowError('Invalid phone');
   });
 
-  it('7 - should throw if phoneValidator.isValid throws', () => {
+  it('9 - should throw if phoneValidator.isValid throws', () => {
     const sutProps: CustomerProps = anyCustomerProps;
     const sut = new SutFactory(sutProps);
     jest.spyOn(sut.phoneValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -133,7 +144,7 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).toThrowError('Internal error');
   });
 
-  it("8 - shouldn't throw if phoneValidator.isValid returns true", () => {
+  it("10 - shouldn't throw if phoneValidator.isValid returns true", () => {
     const sutProps: CustomerProps = {
       ...anyCustomerProps,
       phone: 'valid_phone',
@@ -142,7 +153,15 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).not.toThrow();
   });
 
-  it('9 - should throw if cpfValidator.isValid returns false', () => {
+  it('11 - should cpfValidator.isValid calls with correct cpf', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const isValidSpy = jest.spyOn(sut.cpfValidatorStub, 'isValid');
+    sut.makeSut();
+    expect(isValidSpy).toHaveBeenCalledWith(sutProps.cpf);
+  });
+
+  it('11 - should throw if cpfValidator.isValid returns false', () => {
     const sutProps: CustomerProps = {
       ...anyCustomerProps,
       cpf: 'invalid_cpf',
@@ -151,7 +170,7 @@ describe('Customer', () => {
     jest.spyOn(sut.cpfValidatorStub, 'isValid').mockReturnValueOnce(false);
   });
 
-  it('10 - should throw if cpfValidator.isValid throws', () => {
+  it('12 - should throw if cpfValidator.isValid throws', () => {
     const sutProps: CustomerProps = anyCustomerProps;
     const sut = new SutFactory(sutProps);
     jest.spyOn(sut.cpfValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -160,7 +179,7 @@ describe('Customer', () => {
     expect(() => sut.makeSut()).toThrowError('Internal error');
   });
 
-  it("11 - shouldn't throw if cpfValidator.isValid returns true", () => {
+  it("13 - shouldn't throw if cpfValidator.isValid returns true", () => {
     const sutProps: CustomerProps = {
       ...anyCustomerProps,
       cpf: 'valid_cpf',
