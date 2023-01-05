@@ -28,6 +28,14 @@ const makeCpfValidator = (): CpfValidator => {
   return new CpfValidatorStub();
 };
 
+const anyCustomerProps: CustomerProps = {
+  name: 'any_name',
+  email: 'any_email',
+  phone: 'any_phone',
+  cpf: 'any_cpf',
+  address: 'any_address',
+};
+
 interface SutTypes {
   sut: Customer;
   emailValidatorStub: EmailValidator;
@@ -35,7 +43,7 @@ interface SutTypes {
   cpfValidatorStub: CpfValidator;
 }
 
-const makeSut = (CustomerProps: CustomerProps): SutTypes => {
+const makeSut = (CustomerProps: CustomerProps = anyCustomerProps): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
   const phoneValidatorStub = makePhoneValidator();
   const cpfValidatorStub = makeCpfValidator();
@@ -63,13 +71,7 @@ describe('Customer', () => {
   });
 
   it('2 - should not be able to create a Customer name with less than 3 characters', () => {
-    const sutProps: CustomerProps = {
-      name: '12',
-      email: 'valid_email',
-      phone: 'valid_phone',
-      cpf: 'valid_cpf',
-      address: 'valid_address',
-    };
+    const sutProps: CustomerProps = { ...anyCustomerProps, name: '12' };
     expect(
       () =>
         new Customer(
@@ -83,11 +85,8 @@ describe('Customer', () => {
 
   it('3 - should throw if emailValidator.isValid returns false', () => {
     const sutProps: CustomerProps = {
-      name: 'any_name',
+      ...anyCustomerProps,
       email: 'invalid_email',
-      phone: 'any_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
     };
     const { emailValidatorStub } = makeSut(sutProps);
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false);
@@ -103,13 +102,7 @@ describe('Customer', () => {
   });
 
   it('4 - should throw if emailValidator.isValid throws', () => {
-    const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
-      phone: 'any_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
-    };
+    const sutProps: CustomerProps = anyCustomerProps;
     const { emailValidatorStub, phoneValidatorStub, cpfValidatorStub } =
       makeSut(sutProps);
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -128,11 +121,8 @@ describe('Customer', () => {
 
   it("5 - shouldn't throw if emailValidator.isValid returns true", () => {
     const sutProps: CustomerProps = {
-      name: 'any_name',
+      ...anyCustomerProps,
       email: 'valid_email',
-      phone: 'any_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
     };
     const { emailValidatorStub, phoneValidatorStub, cpfValidatorStub } =
       makeSut(sutProps);
@@ -149,11 +139,8 @@ describe('Customer', () => {
 
   it('6 - should throw if phoneValidator.isValid returns false', () => {
     const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
+      ...anyCustomerProps,
       phone: 'invalid_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
     };
     const { phoneValidatorStub, emailValidatorStub, cpfValidatorStub } =
       makeSut(sutProps);
@@ -170,13 +157,7 @@ describe('Customer', () => {
   });
 
   it('7 - should throw if phoneValidator.isValid throws', () => {
-    const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
-      phone: 'any_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
-    };
+    const sutProps: CustomerProps = anyCustomerProps;
     const { phoneValidatorStub, emailValidatorStub, cpfValidatorStub } =
       makeSut(sutProps);
     jest.spyOn(phoneValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -195,11 +176,8 @@ describe('Customer', () => {
 
   it("8 - shouldn't throw if phoneValidator.isValid returns true", () => {
     const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
+      ...anyCustomerProps,
       phone: 'valid_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
     };
     const { phoneValidatorStub, emailValidatorStub, cpfValidatorStub } =
       makeSut(sutProps);
@@ -216,11 +194,8 @@ describe('Customer', () => {
 
   it('9 - should throw if cpfValidator.isValid returns false', () => {
     const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
-      phone: 'any_phone',
+      ...anyCustomerProps,
       cpf: 'invalid_cpf',
-      address: 'any_address',
     };
     const { cpfValidatorStub, emailValidatorStub, phoneValidatorStub } =
       makeSut(sutProps);
@@ -237,13 +212,7 @@ describe('Customer', () => {
   });
 
   it('10 - should throw if cpfValidator.isValid throws', () => {
-    const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
-      phone: 'any_phone',
-      cpf: 'any_cpf',
-      address: 'any_address',
-    };
+    const sutProps: CustomerProps = anyCustomerProps;
     const { cpfValidatorStub, emailValidatorStub, phoneValidatorStub } =
       makeSut(sutProps);
     jest.spyOn(cpfValidatorStub, 'isValid').mockImplementationOnce(() => {
@@ -262,11 +231,8 @@ describe('Customer', () => {
 
   it("11 - shouldn't throw if cpfValidator.isValid returns true", () => {
     const sutProps: CustomerProps = {
-      name: 'any_name',
-      email: 'any_email',
-      phone: 'any_phone',
+      ...anyCustomerProps,
       cpf: 'valid_cpf',
-      address: 'any_address',
     };
     const { cpfValidatorStub, emailValidatorStub, phoneValidatorStub } =
       makeSut(sutProps);
