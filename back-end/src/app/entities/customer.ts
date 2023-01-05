@@ -74,4 +74,12 @@ export class Customer {
   get address(): Address {
     return this.props.address;
   }
+
+  public updateProps(props: CustomerProps): void {
+    this.validateCpf(props.cpf);
+    this.validateEmail(props.email);
+    this.validateNameLength(props.name);
+    this.validatePhone(props.phone);
+    this.props = props;
+  }
 }
