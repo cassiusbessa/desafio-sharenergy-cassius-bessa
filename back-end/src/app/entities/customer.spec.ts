@@ -1,7 +1,5 @@
 import { Customer, CustomerProps } from './customer';
-import { EmailValidator } from '../protocols/email-validator';
-import { PhoneValidator } from '../protocols/phone-validator';
-import { CpfValidator } from '../protocols/cpf-validator';
+import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {

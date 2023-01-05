@@ -1,6 +1,4 @@
-import { CpfValidator } from '../protocols/cpf-validator';
-import { EmailValidator } from '../protocols/email-validator';
-import { PhoneValidator } from '../protocols/phone-validator';
+import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
 
 export interface CustomerProps {
   name: string;
