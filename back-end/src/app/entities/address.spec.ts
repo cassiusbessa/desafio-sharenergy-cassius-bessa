@@ -11,15 +11,6 @@ export const anyAddressProps: AddressProps = {
   zipcode: 'any_zipcode',
 };
 
-interface SutTypes {
-  sut: Address;
-}
-
-// const makeSut = (AddressProps: AddressProps = anyAddressProps): SutTypes => {
-//   const sut = new Address(AddressProps);
-//   return { sut };
-// };
-
 class SutFactory {
   public sutProps: AddressProps;
   constructor(sutProps: AddressProps) {

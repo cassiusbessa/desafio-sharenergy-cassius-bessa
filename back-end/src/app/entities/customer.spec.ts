@@ -38,13 +38,6 @@ const anyCustomerProps: CustomerProps = {
   address: new Address(anyAddressProps),
 };
 
-interface SutTypes {
-  sut: Customer;
-  emailValidatorStub: EmailValidator;
-  phoneValidatorStub: PhoneValidator;
-  cpfValidatorStub: CpfValidator;
-}
-
 class SutFactory {
   public emailValidatorStub: EmailValidator;
   public phoneValidatorStub: PhoneValidator;
