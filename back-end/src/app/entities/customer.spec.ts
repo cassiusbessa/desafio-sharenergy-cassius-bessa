@@ -144,4 +144,18 @@ describe('Customer', () => {
       () => new Customer(sutProps, emailValidatorStub, phoneValidatorStub),
     ).toThrowError('Internal error');
   });
+
+  it("8 - shouldn't throw if phoneValidator.isValid returns true", () => {
+    const sutProps: CustomerProps = {
+      name: 'any_name',
+      email: 'any_email',
+      phone: 'valid_phone',
+      cpf: 'any_cpf',
+      address: 'any_address',
+    };
+    const { phoneValidatorStub } = makeSut(sutProps);
+    expect(
+      () => new Customer(sutProps, makeEmailValidator(), phoneValidatorStub),
+    ).not.toThrow();
+  });
 });
