@@ -19,6 +19,7 @@ export class Address {
     this.validateNeighborhoodLength(props.neighborhood);
     this.validateCityLength(props.city);
     this.validateStateLength(props.state);
+    this.validateCountryLength(props.country);
   }
 
   get street(): string {
@@ -77,6 +78,12 @@ export class Address {
 
   get country(): string {
     return this.props.country;
+  }
+
+  private validateCountryLength(country: string) {
+    if (country.length < 3) {
+      throw new Error('Country must have at least 3 characters');
+    }
   }
 
   get zipcode(): string {
