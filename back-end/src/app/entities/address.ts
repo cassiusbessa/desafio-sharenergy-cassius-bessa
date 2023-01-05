@@ -18,6 +18,7 @@ export class Address {
     this.validateNumberLength(props.number);
     this.validateNeighborhoodLength(props.neighborhood);
     this.validateCityLength(props.city);
+    this.validateStateLength(props.state);
   }
 
   get street(): string {
@@ -66,6 +67,12 @@ export class Address {
 
   get state(): string {
     return this.props.state;
+  }
+
+  private validateStateLength(state: string) {
+    if (state.length < 2) {
+      throw new Error('State must have at least 2 characters');
+    }
   }
 
   get country(): string {
