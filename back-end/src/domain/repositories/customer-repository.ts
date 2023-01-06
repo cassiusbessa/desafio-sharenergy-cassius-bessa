@@ -7,5 +7,5 @@ export abstract class CustomerRepository {
   ): Promise<(CustomerProps & { id: string }) | null>;
   abstract update(customer: CustomerProps, id: string): Promise<void>;
   abstract delete(id: string): Promise<void>;
-  abstract getAll(): Promise<Customer[]>;
+  abstract getAll(): Promise<CustomerProps & { id: string }[]>;
 }
