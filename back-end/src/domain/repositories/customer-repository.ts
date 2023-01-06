@@ -1,4 +1,4 @@
-import { Customer } from '../entities/customer';
+import { Customer, CustomerProps } from '../entities/customer';
 
 export abstract class CustomerRepository {
   abstract register(customer: Customer): Promise<void>;
