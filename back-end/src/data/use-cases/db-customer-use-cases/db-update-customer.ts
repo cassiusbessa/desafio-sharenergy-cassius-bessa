@@ -1,0 +1,20 @@
+import { CustomerNotFound } from 'src/data/errors/customer-errors/customer-not-found';
+import { CustomerProps } from 'src/domain/entities/customer';
+import { CustomerRepository } from 'src/domain/repositories/customer-repository';
+import { UpdateCustomer } from 'src/domain/use-cases/customer-use-cases/update-customer';
+
+export class DbUpdateCustomer implements UpdateCustomer {
+  constructor(private readonly customerRepository: CustomerRepository) {}
+
+  async update(
+    customer: CustomerProps,
+    id: string,
+  ): Promise<CustomerProps & { id: string }> {
+    const customerToUpdate = await this.customerRepository.getInfo(id);
+    if (!customerToUpdate) {
+      throw new CustomerNotFound();
+    }
+    await this.customerRepository.update(customer, id);
+    return { ...customerToUpdate, ...customer, id };
+  }
+}
