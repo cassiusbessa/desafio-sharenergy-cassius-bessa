@@ -19,10 +19,10 @@ export class Customer {
 
   constructor(
     props: CustomerProps,
-    id: string,
     emailValidator: EmailValidator,
     phoneValidator: PhoneValidator,
     cpfValidator: CpfValidator,
+    id?: string,
   ) {
     this.emailValidator = emailValidator;
     this.phoneValidator = phoneValidator;

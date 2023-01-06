@@ -53,7 +53,6 @@ class SutFactory {
   makeSut(): Customer {
     return new Customer(
       this.sutProps,
-      '1',
       this.emailValidatorStub,
       this.phoneValidatorStub,
       this.cpfValidatorStub,
