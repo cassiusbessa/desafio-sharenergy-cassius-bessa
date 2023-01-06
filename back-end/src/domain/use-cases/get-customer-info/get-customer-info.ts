@@ -1,5 +1,5 @@
-import { Customer } from 'src/domain/entities/customer';
+import { CustomerProps } from 'src/domain/entities/customer';
 
 export interface GetCustomerInfo {
-  get: (id: string) => Promise<Customer>;
+  get: (id: string) => Promise<CustomerProps & { id: string }>;
 }

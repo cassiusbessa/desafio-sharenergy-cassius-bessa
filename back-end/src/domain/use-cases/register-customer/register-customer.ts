@@ -1,5 +1,7 @@
-import { Customer, CustomerProps } from 'src/domain/entities/customer';
+import { CustomerProps } from 'src/domain/entities/customer';
 
 export interface RegisterCustomer {
-  register: (customer: CustomerProps) => Promise<Customer>;
+  register: (
+    customer: CustomerProps,
+  ) => Promise<CustomerProps & { id: string }>;
 }
