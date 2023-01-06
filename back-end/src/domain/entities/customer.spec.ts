@@ -237,4 +237,15 @@ describe('Customer', () => {
       'Name must have at least 3 characters',
     );
   });
+
+  it('17 - should be able get all customer props and id ', () => {
+    const sutProps: CustomerProps = anyCustomerProps;
+    const sut = new SutFactory(sutProps);
+    const customer = sut.makeSut();
+    const customerProps = customer.getAllProps();
+    expect(customerProps).toMatchObject({
+      ...sutProps,
+      id: customer.id,
+    });
+  });
 });
