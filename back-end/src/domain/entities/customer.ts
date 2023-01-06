@@ -83,6 +83,10 @@ export class Customer {
     return this.props.address;
   }
 
+  public getAllProps(): CustomerProps & { id: string } {
+    return { ...this.props, id: this._id };
+  }
+
   public updateProps(props: CustomerProps): void {
     this.validateCpf(props.cpf);
     this.validateEmail(props.email);
