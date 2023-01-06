@@ -1,9 +1,5 @@
 import { randomUUID } from 'crypto';
-import {
-  EmailValidator,
-  PhoneValidator,
-  CpfValidator,
-} from 'src/app/domain/protocols';
+import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
 import { Address } from './address';
 
 export interface CustomerProps {
