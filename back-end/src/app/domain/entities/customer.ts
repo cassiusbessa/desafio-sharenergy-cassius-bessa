@@ -1,4 +1,9 @@
-import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
+import { randomUUID } from 'crypto';
+import {
+  EmailValidator,
+  PhoneValidator,
+  CpfValidator,
+} from 'src/app/domain/protocols';
 import { Address } from './address';
 
 export interface CustomerProps {
@@ -11,12 +16,14 @@ export interface CustomerProps {
 
 export class Customer {
   private props: CustomerProps;
+  private _id: string;
   private readonly emailValidator: EmailValidator;
   private readonly phoneValidator: PhoneValidator;
   private readonly cpfValidator: CpfValidator;
 
   constructor(
     props: CustomerProps,
+    id: string,
     emailValidator: EmailValidator,
     phoneValidator: PhoneValidator,
     cpfValidator: CpfValidator,
@@ -25,6 +32,7 @@ export class Customer {
     this.phoneValidator = phoneValidator;
     this.cpfValidator = cpfValidator;
     this.props = props;
+    this._id = id ?? randomUUID();
     this.validateNameLength(props.name);
     this.validateEmail(props.email);
     this.validatePhone(props.phone);
@@ -33,6 +41,10 @@ export class Customer {
 
   get name(): string {
     return this.props.name;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   private validateNameLength(name: string) {
