@@ -1,5 +1,5 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
-import { PhoneValidator } from 'src/domain/protocols';
+import { PhoneValidator } from '@domain/protocols';
 export class PhoneValidatorAdapter implements PhoneValidator {
   isValid(phone: string): boolean {
     const phoneUtil = PhoneNumberUtil.getInstance();

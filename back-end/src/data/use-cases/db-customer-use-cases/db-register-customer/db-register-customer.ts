@@ -1,10 +1,7 @@
-import {
-  CustomerProps,
-  PersistenceCustomer,
-} from 'src/domain/entities/customer';
-import { CustomerRepository } from 'src/domain/repositories/customer-repository';
-import { RegisterCustomer } from 'src/domain/use-cases/customer-use-cases/register-customer';
-import { makeCustomer } from 'src/factories/makeCustomer';
+import { CustomerProps, PersistenceCustomer } from '@domain/entities/customer';
+import { CustomerRepository } from '@domain/repositories/customer-repository';
+import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
+import { makeCustomer } from '../../../../factories/makeCustomer';
 
 export class DbRegisterCustomer implements RegisterCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}

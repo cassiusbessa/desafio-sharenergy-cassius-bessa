@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
-import { Address } from './address';
+import { Address, AddressProps } from './address';
 
 export interface CustomerProps {
   name: string;
@@ -16,7 +16,7 @@ export interface PersistenceCustomer {
   email: string;
   phone: string;
   cpf: string;
-  address: Address;
+  address: AddressProps;
 }
 
 export class Customer {
@@ -93,7 +93,11 @@ export class Customer {
   }
 
   public getAllProps(): PersistenceCustomer {
-    return { ...this.props, id: this._id };
+    return {
+      ...this.props,
+      id: this._id,
+      address: { ...this.props.address.getProps() },
+    };
   }
 
   public updateProps(props: CustomerProps): void {

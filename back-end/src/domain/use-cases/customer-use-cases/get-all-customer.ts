@@ -1,4 +1,4 @@
-import { PersistenceCustomer } from 'src/domain/entities/customer';
+import { PersistenceCustomer } from '@domain/entities/customer';
 
 export interface GetAllCustomer {
   getAll: () => Promise<PersistenceCustomer[]>;

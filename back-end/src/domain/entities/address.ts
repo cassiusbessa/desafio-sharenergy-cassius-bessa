@@ -97,6 +97,10 @@ export class Address {
     }
   }
 
+  public getProps(): AddressProps {
+    return this.props;
+  }
+
   public getFullAddress(): string {
     return `${this.street}, ${this.number}, ${this.complement}, ${this.neighborhood}, ${this.city}, ${this.state}, ${this.country}, ${this.zipcode}`;
   }

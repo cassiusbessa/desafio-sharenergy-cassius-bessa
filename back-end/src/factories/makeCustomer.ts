@@ -1,9 +1,9 @@
-import { Customer, CustomerProps } from 'src/domain/entities/customer';
+import { Customer, CustomerProps } from '@domain/entities/customer';
 import {
   CpfValidatorAdapter,
   EmailValidatorAdapter,
   PhoneValidatorAdapter,
-} from 'src/infra/customer-validators';
+} from '@infra/customer-validators';
 
 export const makeCustomer = (customerProps: CustomerProps): Customer => {
   const emailValidator = new EmailValidatorAdapter();

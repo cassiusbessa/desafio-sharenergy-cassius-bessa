@@ -1,10 +1,7 @@
-import { CustomerNotFound } from 'src/data/errors/customer-errors/customer-not-found';
-import {
-  CustomerProps,
-  PersistenceCustomer,
-} from 'src/domain/entities/customer';
-import { CustomerRepository } from 'src/domain/repositories/customer-repository';
-import { UpdateCustomer } from 'src/domain/use-cases/customer-use-cases/update-customer';
+import { CustomerNotFound } from '@data/errors/customer-errors/customer-not-found';
+import { CustomerProps, PersistenceCustomer } from '@domain/entities/customer';
+import { CustomerRepository } from '@domain/repositories/customer-repository';
+import { UpdateCustomer } from '@domain/use-cases/customer-use-cases/update-customer';
 
 export class DbUpdateCustomer implements UpdateCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}

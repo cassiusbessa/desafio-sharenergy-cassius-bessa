@@ -1,4 +1,4 @@
-import { EmailValidator } from 'src/domain/protocols';
+import { EmailValidator } from '@domain/protocols';
 
 export class EmailValidatorAdapter implements EmailValidator {
   isValid(email: string): boolean {

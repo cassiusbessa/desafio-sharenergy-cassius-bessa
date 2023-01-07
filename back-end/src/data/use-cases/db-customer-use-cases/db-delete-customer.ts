@@ -1,5 +1,5 @@
-import { CustomerRepository } from 'src/domain/repositories/customer-repository';
-import { DeleteCustomer } from 'src/domain/use-cases/customer-use-cases/delete-customer';
+import { CustomerRepository } from '@domain/repositories/customer-repository';
+import { DeleteCustomer } from '@domain/use-cases/customer-use-cases/delete-customer';
 
 export class DbDeleteCustomer implements DeleteCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}
