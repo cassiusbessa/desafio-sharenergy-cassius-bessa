@@ -10,6 +10,15 @@ export interface CustomerProps {
   address: Address;
 }
 
+export interface PersistenceCustomer {
+  name: string;
+  id: string;
+  email: string;
+  phone: string;
+  cpf: string;
+  address: Address;
+}
+
 export class Customer {
   private props: CustomerProps;
   private _id: string;
@@ -83,7 +92,7 @@ export class Customer {
     return this.props.address;
   }
 
-  public getAllProps(): CustomerProps & { id: string } {
+  public getAllProps(): PersistenceCustomer {
     return { ...this.props, id: this._id };
   }
 

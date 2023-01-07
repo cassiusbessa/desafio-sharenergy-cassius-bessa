@@ -1,4 +1,7 @@
-import { CustomerProps } from 'src/domain/entities/customer';
+import {
+  CustomerProps,
+  PersistenceCustomer,
+} from 'src/domain/entities/customer';
 import { CustomerRepository } from 'src/domain/repositories/customer-repository';
 import { RegisterCustomer } from 'src/domain/use-cases/customer-use-cases/register-customer';
 import { makeCustomer } from 'src/factories/makeCustomer';
@@ -6,9 +9,7 @@ import { makeCustomer } from 'src/factories/makeCustomer';
 export class DbRegisterCustomer implements RegisterCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  async register(
-    customer: CustomerProps,
-  ): Promise<CustomerProps & { id: string }> {
+  async register(customer: CustomerProps): Promise<PersistenceCustomer> {
     const newCostumer = makeCustomer(customer);
     await this.customerRepository.register(newCostumer.getAllProps());
     return newCostumer.getAllProps();

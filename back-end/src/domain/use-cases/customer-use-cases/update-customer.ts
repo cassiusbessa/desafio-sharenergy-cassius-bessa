@@ -1,8 +1,8 @@
-import { CustomerProps } from 'src/domain/entities/customer';
+import {
+  CustomerProps,
+  PersistenceCustomer,
+} from 'src/domain/entities/customer';
 
 export interface UpdateCustomer {
-  update: (
-    customer: CustomerProps,
-    id: string,
-  ) => Promise<CustomerProps & { id: string }>;
+  update: (customer: CustomerProps, id: string) => Promise<PersistenceCustomer>;
 }
