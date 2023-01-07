@@ -30,7 +30,7 @@ const makeCpfValidator = (): CpfValidator => {
   return new CpfValidatorStub();
 };
 
-const anyCustomerProps: CustomerProps = {
+export const anyCustomerProps: CustomerProps = {
   name: 'any_name',
   email: 'any_email',
   phone: 'any_phone',
@@ -246,6 +246,7 @@ describe('Customer', () => {
     expect(customerProps).toMatchObject({
       ...sutProps,
       id: customer.id,
+      address: anyAddressProps,
     });
   });
 });
