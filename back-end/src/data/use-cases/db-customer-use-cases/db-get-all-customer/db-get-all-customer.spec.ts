@@ -25,4 +25,11 @@ describe('DbGetAllCustomer', () => {
       .mockReturnValueOnce(Promise.reject(new Error()));
     expect(sut.getAll()).rejects.toThrow();
   });
+
+  it('3 - should return a list of customers on success', async () => {
+    const { sut, registerCustomer } = makeSut();
+    await registerCustomer.register(defaultPersistenceCustomer);
+    const result = await sut.getAll();
+    expect(result).toEqual([defaultPersistenceCustomer]);
+  });
 });
