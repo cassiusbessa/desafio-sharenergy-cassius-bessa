@@ -6,11 +6,8 @@ import { GetCustomerByEmail } from '@domain/use-cases/customer-use-cases/get-cus
 export class DbGetCustomerByEmail implements GetCustomerByEmail {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  async get(email: string): Promise<PersistenceCustomer> {
+  async get(email: string): Promise<PersistenceCustomer | null> {
     const customer = await this.customerRepository.getByEmail(email);
-    if (!customer) {
-      throw new CustomerNotFound();
-    }
     return customer;
   }
 }
