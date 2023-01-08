@@ -6,9 +6,15 @@ import { makeCustomer } from '../../../../factories/makeCustomer';
 export class DbRegisterCustomer implements RegisterCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  async register(customer: CustomerProps): Promise<PersistenceCustomer> {
-    const newCostumer = makeCustomer(customer);
-    await this.customerRepository.register(newCostumer.getAllProps());
-    return newCostumer.getAllProps();
+  async register(customer: PersistenceCustomer): Promise<boolean> {
+    const exists = await this.customerRepository.getByEmail(customer.email);
+    console.log('exists: ', exists);
+    if (exists) {
+      return false;
+    }
+    console.log('vou registar o customer: ', customer);
+    const isValid = await this.customerRepository.register(customer);
+    console.log('isValid: ', isValid);
+    return isValid;
   }
 }
