@@ -18,4 +18,12 @@ describe('DbGetCustomerByEmail', () => {
     await sut.get('any_email');
     expect(getByEmailSpy).toHaveBeenCalledWith('any_email');
   });
+
+  it('2 - should throw if CustomerRepository throws', async () => {
+    const { sut, customerRepositoryStub } = makeSut();
+    jest
+      .spyOn(customerRepositoryStub, 'getByEmail')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    expect(sut.get('any_email')).rejects.toThrow();
+  });
 });

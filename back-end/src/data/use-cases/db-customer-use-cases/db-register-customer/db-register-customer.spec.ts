@@ -34,7 +34,7 @@ describe('DbRegisterCustomer', () => {
     expect(registerSpy).toHaveBeenCalledWith(defaultPersistenceCustomer);
   });
 
-  it(' 2 - should throw if CustomerRepository throws', async () => {
+  it('2 - should throw if CustomerRepository throws', async () => {
     const { sut, customerRepositoryStub } = makeSut();
     jest
       .spyOn(customerRepositoryStub, 'register')
