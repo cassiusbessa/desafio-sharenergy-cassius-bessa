@@ -2,7 +2,7 @@ import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-mem
 import { DbRegisterCustomer } from './db-register-customer';
 import { PersistenceCustomer } from '@domain/entities/customer';
 
-const defaultPersistenceCustomer: PersistenceCustomer = {
+export const defaultPersistenceCustomer: PersistenceCustomer = {
   id: 'any_id',
   name: 'any_name',
   email: 'any_email',
