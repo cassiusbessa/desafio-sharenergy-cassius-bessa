@@ -4,7 +4,7 @@ import { DeleteCustomer } from '@domain/use-cases/customer-use-cases/delete-cust
 export class DbDeleteCustomer implements DeleteCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  async delete(id: string): Promise<void> {
-    await this.customerRepository.delete(id);
+  async delete(id: string): Promise<boolean> {
+    return this.customerRepository.delete(id);
   }
 }

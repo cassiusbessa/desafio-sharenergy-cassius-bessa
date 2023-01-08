@@ -1,3 +1,3 @@
 export interface DeleteCustomer {
-  delete: (id: string) => Promise<void>;
+  delete: (id: string) => Promise<boolean>;
 }
