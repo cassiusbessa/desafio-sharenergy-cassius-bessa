@@ -1,4 +1,3 @@
-import { CustomerNotFound } from '@data/errors/customer-errors/customer-not-found';
 import { CustomerProps, PersistenceCustomer } from '@domain/entities/customer';
 import { CustomerRepository } from '@domain/repositories/customer-repository';
 import { UpdateCustomer } from '@domain/use-cases/customer-use-cases/update-customer';
@@ -7,14 +6,15 @@ export class DbUpdateCustomer implements UpdateCustomer {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
   async update(
-    customer: CustomerProps,
-    id: string,
+    customer: Partial<PersistenceCustomer>,
+    email: string,
   ): Promise<PersistenceCustomer> {
-    const customerToUpdate = await this.customerRepository.getInfo(id);
+    const customerToUpdate = await this.customerRepository.getByEmail(email);
+    console.log('customerToUpdate: ', customerToUpdate);
     if (!customerToUpdate) {
-      throw new CustomerNotFound();
+      return null;
     }
-    await this.customerRepository.update(customer, id);
-    return { ...customerToUpdate, ...customer, id };
+    const isUpdated = await this.customerRepository.update(customer, email);
+    return isUpdated ? customerToUpdate : null;
   }
 }

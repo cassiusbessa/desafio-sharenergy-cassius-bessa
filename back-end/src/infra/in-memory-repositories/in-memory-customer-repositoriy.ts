@@ -15,11 +15,17 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     }
     return Promise.resolve(customer);
   }
-  update(customer: CustomerProps, id: string): Promise<boolean> {
-    const index = this.customers.findIndex((customer) => customer.id === id);
+  update(
+    customer: Partial<PersistenceCustomer>,
+    email: string,
+  ): Promise<boolean> {
+    const index = this.customers.findIndex(
+      (customer) => customer.email === email,
+    );
     if (index === -1) {
       return Promise.resolve(false);
     }
+    customer.id = this.customers[index].id;
     this.customers[index] = { ...this.customers[index], ...customer };
     return Promise.resolve(true);
   }
