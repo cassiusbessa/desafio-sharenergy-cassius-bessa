@@ -38,23 +38,13 @@ describe('DbUpdateCustomer', () => {
     ).rejects.toThrow();
   });
 
-  it('3 - should return null if email does not exists', async () => {
-    const { sut } = makeSut();
-    const customer = await sut.update(updatedCustomer, 'non_existent_email');
-    expect(customer).toBeNull();
-  });
-
-  it('4 - should return updated customer on success', async () => {
+  it('3 - should return true customer on success', async () => {
     const { sut, registerCustomer } = makeSut();
     await registerCustomer.register(defaultPersistenceCustomer);
-    const customer = await sut.update(
+    const isUpdated = await sut.update(
       updatedCustomer,
       defaultPersistenceCustomer.email,
     );
-    expect(customer).toEqual({
-      ...defaultPersistenceCustomer,
-      ...updatedCustomer,
-      id: defaultPersistenceCustomer.id,
-    });
+    expect(isUpdated).toBe(true);
   });
 });
