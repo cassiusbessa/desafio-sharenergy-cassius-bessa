@@ -16,4 +16,12 @@ describe('DbDeleteCustomer', () => {
     await sut.delete('any_id');
     expect(deleteSpy).toHaveBeenCalledWith('any_id');
   });
+
+  it('2 - should throw if CustomerRepository throws', async () => {
+    const { sut, customerRepositoryStub } = makeSut();
+    jest
+      .spyOn(customerRepositoryStub, 'delete')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    expect(sut.delete('any_id')).rejects.toThrow();
+  });
 });
