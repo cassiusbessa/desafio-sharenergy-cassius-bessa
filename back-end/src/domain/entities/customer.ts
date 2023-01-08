@@ -16,7 +16,7 @@ export interface PersistenceCustomer extends CustomerProps {
 
 export class Customer {
   private props: CustomerProps;
-  private _id: string;
+  private readonly _id: string;
   private readonly emailValidator: EmailValidator;
   private readonly phoneValidator: PhoneValidator;
   private readonly cpfValidator: CpfValidator;
