@@ -26,4 +26,10 @@ describe('DbGetCustomerByEmail', () => {
       .mockReturnValueOnce(Promise.reject(new Error()));
     expect(sut.get('any_email')).rejects.toThrow();
   });
+
+  it('3 - should return null if email does not exists', async () => {
+    const { sut } = makeSut();
+    const customer = await sut.get('non_existent_email');
+    expect(customer).toBeNull();
+  });
 });
