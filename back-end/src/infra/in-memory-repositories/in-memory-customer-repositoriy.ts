@@ -6,9 +6,14 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     this.customers.push(customer);
     return Promise.resolve(true);
   }
-  getInfo(id: string): Promise<PersistenceCustomer | null> {
-    const customer = this.customers.find((customer) => customer.id === id);
-    return Promise.resolve(customer ?? null);
+  getByEmail(email: string): Promise<PersistenceCustomer | null> {
+    const customer = this.customers.find(
+      (customer) => customer.email === email,
+    );
+    if (!customer) {
+      return Promise.resolve(null);
+    }
+    return Promise.resolve(customer);
   }
   update(customer: CustomerProps, id: string): Promise<boolean> {
     const index = this.customers.findIndex((customer) => customer.id === id);
