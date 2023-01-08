@@ -35,11 +35,19 @@ const makeSut = () => {
 };
 
 describe('DbRegisterCustomer', () => {
-  it('should call CustomerRepository with correct values', async () => {
+  it('1 - should call CustomerRepository with correct values', async () => {
     const { sut, customerRepositoryStub } = makeSut();
     const registerSpy = jest.spyOn(customerRepositoryStub, 'register');
     makeCustomer(anyCustomerProps);
     sut.register(anyCustomerProps);
     expect(registerSpy).toHaveBeenCalledWith(defaultPersistenceCustomer);
+  });
+
+  it(' 2 - should throw if CustomerRepository throws', async () => {
+    const { sut, customerRepositoryStub } = makeSut();
+    jest
+      .spyOn(customerRepositoryStub, 'register')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    expect(sut.register(anyCustomerProps)).rejects.toThrow();
   });
 });
