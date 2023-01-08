@@ -1,5 +1,6 @@
 import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-memory-customer-repositoriy';
 import { DbRegisterCustomer } from '../db-register-customer/db-register-customer';
+import { defaultPersistenceCustomer } from '../db-register-customer/db-register-customer.spec';
 import { DbDeleteCustomer } from './db-delete-customer';
 
 const makeSut = () => {
@@ -23,5 +24,12 @@ describe('DbDeleteCustomer', () => {
       .spyOn(customerRepositoryStub, 'delete')
       .mockReturnValueOnce(Promise.reject(new Error()));
     expect(sut.delete('any_id')).rejects.toThrow();
+  });
+
+  it('3 - should return true on success', async () => {
+    const { sut, registerCustomer } = makeSut();
+    await registerCustomer.register(defaultPersistenceCustomer);
+    const result = await sut.delete('any_id');
+    expect(result).toBe(true);
   });
 });
