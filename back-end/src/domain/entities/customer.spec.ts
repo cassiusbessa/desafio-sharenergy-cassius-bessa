@@ -201,7 +201,7 @@ describe('Customer', () => {
       address: new Address(anyAddressProps),
     };
     customer.updateProps(newProps);
-    expect(customer).toMatchObject(newProps);
+    expect(customer.getAllProps()).toMatchObject(newProps);
   });
 
   it('15 - must call all validations with correct values when updating a Customer', () => {
@@ -245,7 +245,7 @@ describe('Customer', () => {
     const customerProps = customer.getAllProps();
     expect(customerProps).toMatchObject({
       ...sutProps,
-      id: customer.id,
+      id: customer.getAllProps().id,
       address: anyAddressProps,
     });
   });

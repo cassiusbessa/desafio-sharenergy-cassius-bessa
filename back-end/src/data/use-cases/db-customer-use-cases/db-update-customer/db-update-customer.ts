@@ -1,4 +1,4 @@
-import { CustomerProps, PersistenceCustomer } from '@domain/entities/customer';
+import { PersistenceCustomer } from '@domain/entities/customer';
 import { CustomerRepository } from '@domain/repositories/customer-repository';
 import { UpdateCustomer } from '@domain/use-cases/customer-use-cases/update-customer';
 

@@ -7,16 +7,11 @@ export interface CustomerProps {
   email: string;
   phone: string;
   cpf: string;
-  address: Address;
+  address: AddressProps;
 }
 
-export interface PersistenceCustomer {
-  name: string;
+export interface PersistenceCustomer extends CustomerProps {
   id: string;
-  email: string;
-  phone: string;
-  cpf: string;
-  address: AddressProps;
 }
 
 export class Customer {
@@ -44,22 +39,10 @@ export class Customer {
     this.validateCpf(props.cpf);
   }
 
-  get name(): string {
-    return this.props.name;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
   private validateNameLength(name: string) {
     if (name.length < 3) {
       throw new Error('Name must have at least 3 characters');
     }
-  }
-
-  get email(): string {
-    return this.props.email;
   }
 
   private validateEmail(email: string) {
@@ -68,18 +51,10 @@ export class Customer {
     }
   }
 
-  get phone(): string {
-    return this.props.phone;
-  }
-
   private validatePhone(phone: string) {
     if (!this.phoneValidator.isValid(phone)) {
       throw new Error('Invalid phone');
     }
-  }
-
-  get cpf(): string {
-    return this.props.cpf;
   }
 
   private validateCpf(cpf: string) {
@@ -88,15 +63,10 @@ export class Customer {
     }
   }
 
-  get address(): Address {
-    return this.props.address;
-  }
-
   public getAllProps(): PersistenceCustomer {
     return {
       ...this.props,
       id: this._id,
-      address: { ...this.props.address.getProps() },
     };
   }
 
