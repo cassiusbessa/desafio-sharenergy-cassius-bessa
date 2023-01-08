@@ -13,7 +13,8 @@ export class DbUpdateCustomer implements UpdateCustomer {
     if (!customerToUpdate) {
       return null;
     }
+    const id = customerToUpdate.id;
     const isUpdated = await this.customerRepository.update(customer, email);
-    return isUpdated ? customerToUpdate : null;
+    return isUpdated ? { ...customerToUpdate, ...customer, id } : null;
   }
 }
