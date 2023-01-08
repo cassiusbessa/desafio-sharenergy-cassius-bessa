@@ -37,4 +37,10 @@ describe('DbUpdateCustomer', () => {
       sut.update(updatedCustomer, defaultPersistenceCustomer.email),
     ).rejects.toThrow();
   });
+
+  it('3- should return null if email does not exists', async () => {
+    const { sut } = makeSut();
+    const customer = await sut.update(updatedCustomer, 'non_existent_email');
+    expect(customer).toBeNull();
+  });
 });
