@@ -10,7 +10,6 @@ export class DbUpdateCustomer implements UpdateCustomer {
     email: string,
   ): Promise<PersistenceCustomer> {
     const customerToUpdate = await this.customerRepository.getByEmail(email);
-    console.log('customerToUpdate: ', customerToUpdate);
     if (!customerToUpdate) {
       return null;
     }
