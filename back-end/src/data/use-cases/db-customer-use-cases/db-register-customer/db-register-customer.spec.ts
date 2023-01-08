@@ -1,6 +1,4 @@
 import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-memory-customer-repositoriy';
-import { anyCustomerProps } from '@domain/entities/customer.spec';
-import { makeCustomer } from '../../../../factories/makeCustomer';
 import { DbRegisterCustomer } from './db-register-customer';
 import { PersistenceCustomer } from '@domain/entities/customer';
 
@@ -22,12 +20,6 @@ const defaultPersistenceCustomer: PersistenceCustomer = {
   },
 };
 
-jest.mock('../../../../factories/makeCustomer', () => ({
-  makeCustomer: jest.fn().mockImplementation(() => ({
-    getAllProps: jest.fn().mockReturnValue(defaultPersistenceCustomer),
-  })),
-}));
-
 const makeSut = () => {
   const customerRepositoryStub = new InMemoryCustomerRepository();
   const sut = new DbRegisterCustomer(customerRepositoryStub);
@@ -38,8 +30,7 @@ describe('DbRegisterCustomer', () => {
   it('1 - should call CustomerRepository with correct values', async () => {
     const { sut, customerRepositoryStub } = makeSut();
     const registerSpy = jest.spyOn(customerRepositoryStub, 'register');
-    makeCustomer(anyCustomerProps);
-    sut.register(anyCustomerProps);
+    await sut.register(defaultPersistenceCustomer);
     expect(registerSpy).toHaveBeenCalledWith(defaultPersistenceCustomer);
   });
 
@@ -48,6 +39,15 @@ describe('DbRegisterCustomer', () => {
     jest
       .spyOn(customerRepositoryStub, 'register')
       .mockReturnValueOnce(Promise.reject(new Error()));
-    expect(sut.register(anyCustomerProps)).rejects.toThrow();
+    expect(sut.register(defaultPersistenceCustomer)).rejects.toThrow();
+  });
+
+  it('3 - should return false on if email already exists', async () => {
+    const { sut, customerRepositoryStub } = makeSut();
+    jest
+      .spyOn(customerRepositoryStub, 'register')
+      .mockReturnValueOnce(Promise.resolve(false));
+    const isValid = await sut.register(defaultPersistenceCustomer);
+    expect(isValid).toBe(false);
   });
 });
