@@ -32,4 +32,11 @@ describe('DbGetCustomerByEmail', () => {
     const customer = await sut.get('non_existent_email');
     expect(customer).toBeNull();
   });
+
+  it('4 - should return customer on success', async () => {
+    const { sut, registerCustomer } = makeSut();
+    await registerCustomer.register(defaultPersistenceCustomer);
+    const customer = await sut.get('any_email');
+    expect(customer).toEqual(defaultPersistenceCustomer);
+  });
 });
