@@ -26,4 +26,15 @@ describe('DbUpdateCustomer', () => {
       defaultPersistenceCustomer.email,
     );
   });
+
+  it('2 - should throw if CustomerRepository throws', async () => {
+    const { sut, customerRepositoryStub, registerCustomer } = makeSut();
+    jest
+      .spyOn(customerRepositoryStub, 'update')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    await registerCustomer.register(defaultPersistenceCustomer);
+    expect(
+      sut.update(updatedCustomer, defaultPersistenceCustomer.email),
+    ).rejects.toThrow();
+  });
 });
