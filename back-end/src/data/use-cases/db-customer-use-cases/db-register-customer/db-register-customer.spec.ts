@@ -50,4 +50,10 @@ describe('DbRegisterCustomer', () => {
     const isValid = await sut.register(defaultPersistenceCustomer);
     expect(isValid).toBe(false);
   });
+
+  it('4 - should return true on success', async () => {
+    const { sut } = makeSut();
+    const isValid = await sut.register(defaultPersistenceCustomer);
+    expect(isValid).toBe(true);
+  });
 });
