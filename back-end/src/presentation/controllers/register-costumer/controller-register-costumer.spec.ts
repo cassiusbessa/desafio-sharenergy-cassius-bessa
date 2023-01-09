@@ -7,6 +7,7 @@ import {
 } from '@domain/entities/customer/customer';
 import { makeSut as makeCustomerValidor } from '@domain/entities/customer/validators/customer-validators.spec';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
+import { MissingParamError } from '../../errors';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
 
 const entitieProps: CustomerProps = {
@@ -50,6 +51,6 @@ describe('RegisterCostumerController', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body.message).toBe('Missing param: address');
+    expect(httpResponse.body).toEqual(new MissingParamError('address'));
   });
 });
