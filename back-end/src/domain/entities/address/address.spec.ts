@@ -1,4 +1,4 @@
-import { Address, AddressProps } from './address';
+import { Address, AddressProps } from '../address/address';
 
 export const anyAddressProps: AddressProps = {
   street: 'any_street',

@@ -1,4 +1,4 @@
-import { PersistenceCustomer } from './../../../../domain/entities/customer';
+import { PersistenceCustomer } from '../../../../domain/entities/customer/customer';
 import { DbUpdateCustomer } from './db-update-customer';
 import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-memory-customer-repositoriy';
 import { DbRegisterCustomer } from '../db-register-customer/db-register-customer';

@@ -1,4 +1,7 @@
-import { CustomerProps, PersistenceCustomer } from '../entities/customer';
+import {
+  CustomerProps,
+  PersistenceCustomer,
+} from '../entities/customer/customer';
 
 export abstract class CustomerRepository {
   abstract register(customer: PersistenceCustomer): Promise<boolean>;

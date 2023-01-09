@@ -1,7 +1,7 @@
-import { anyAddressProps } from './address.spec';
+import { anyAddressProps } from '../address/address.spec';
 import { Customer, CustomerProps } from './customer';
-import { EmailValidator, PhoneValidator, CpfValidator } from '../protocols';
-import { Address } from './address';
+import { EmailValidator, PhoneValidator, CpfValidator } from '../../protocols';
+import { Address } from '../address/address';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {

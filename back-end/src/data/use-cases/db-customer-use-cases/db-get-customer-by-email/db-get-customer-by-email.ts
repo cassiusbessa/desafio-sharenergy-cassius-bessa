@@ -1,5 +1,5 @@
 import { CustomerNotFound } from '@data/errors/customer-errors/customer-not-found';
-import { PersistenceCustomer } from '@domain/entities/customer';
+import { PersistenceCustomer } from '@domain/entities/customer/customer';
 import { CustomerRepository } from '@domain/repositories/customer-repository';
 import { GetCustomerByEmail } from '@domain/use-cases/customer-use-cases/get-customer-by-email';
 

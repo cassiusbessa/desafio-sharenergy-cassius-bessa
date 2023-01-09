@@ -1,5 +1,8 @@
 import { CustomerRepository } from '@domain/repositories/customer-repository';
-import { CustomerProps, PersistenceCustomer } from '@domain/entities/customer';
+import {
+  CustomerProps,
+  PersistenceCustomer,
+} from '@domain/entities/customer/customer';
 export class InMemoryCustomerRepository implements CustomerRepository {
   private customers: PersistenceCustomer[] = [];
   register(customer: PersistenceCustomer): Promise<boolean> {

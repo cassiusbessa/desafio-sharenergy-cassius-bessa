@@ -1,4 +1,4 @@
-import { PersistenceCustomer } from '@domain/entities/customer';
+import { PersistenceCustomer } from '@domain/entities/customer/customer';
 import { CustomerRepository } from '@domain/repositories/customer-repository';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
 

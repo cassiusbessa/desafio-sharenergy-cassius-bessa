@@ -1,4 +1,4 @@
-import { Customer, CustomerProps } from '@domain/entities/customer';
+import { Customer, CustomerProps } from '@domain/entities/customer/customer';
 import {
   CpfValidatorAdapter,
   EmailValidatorAdapter,
