@@ -2,12 +2,9 @@ import {
   EmailValidator,
   PhoneValidator,
   CpfValidator,
+  ValidatorResult,
 } from '@domain/protocols';
 
-export interface ValidatorResult {
-  result: boolean;
-  message: string;
-}
 export interface PropsValidators {
   emailValidator: EmailValidator;
   phoneValidator: PhoneValidator;
@@ -73,3 +70,4 @@ export class CustomerValidators {
     return this.validatorResult;
   }
 }
+export { ValidatorResult };
