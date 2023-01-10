@@ -1,3 +1,7 @@
+import {
+  CustomerFactory,
+  CustomerFactoryReturn,
+} from '@domain/protocols/customer-factory';
 import { Address } from '@domain/entities/address/address';
 import { anyAddressProps } from '@domain/entities/address/address.spec';
 import {
@@ -9,17 +13,28 @@ import { makeSut as makeCustomerValidor } from '@domain/entities/customer/valida
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
 import { MissingParamError } from '../../errors';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
+import { PropsValidators } from '@domain/entities/customer/validators/customer-validators';
 
-const entitieProps: CustomerProps = {
-  name: 'any_name',
-  email: 'any_email',
-  phone: 'any_phone',
-  cpf: 'any_cpf',
-  address: new Address(anyAddressProps),
+const defaultHttpRequest = {
+  body: {
+    name: 'any_name',
+    email: 'any_email',
+    phone: 'any_phone',
+    cpf: 'any_cpf',
+    address: new Address(anyAddressProps),
+  },
 };
-const makeEntitie = (customer: CustomerProps) => {
-  const { sut: customerValidator } = makeCustomerValidor();
-  return new Customer(entitieProps, customerValidator);
+const customerFactory = (): CustomerFactory => {
+  class CustomerFactoryStub implements CustomerFactory {
+    public propsValidator: PropsValidators;
+
+    public create(customerProps: CustomerProps): CustomerFactoryReturn {
+      const { sut: validator } = makeCustomerValidor();
+      const customer = new Customer(customerProps, validator);
+      return { customer, validator };
+    }
+  }
+  return new CustomerFactoryStub();
 };
 
 const makeRegisterCustomer = (): RegisterCustomer => {
@@ -32,14 +47,14 @@ const makeRegisterCustomer = (): RegisterCustomer => {
 };
 
 const makeSut = () => {
-  const entite = makeEntitie(entitieProps);
   const registerCustomer = makeRegisterCustomer();
-  const sut = new ControllerRegisterCustomer();
-  return { sut, registerCustomer, entite };
+  const factory = customerFactory();
+  const sut = new ControllerRegisterCustomer(registerCustomer, factory);
+  return { sut, registerCustomer, factory };
 };
 
 describe('RegisterCostumerController', () => {
-  it('Should return 400 if any parameters not provided', async () => {
+  it('1 - should return 400 if any parameters not provided', async () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
@@ -52,5 +67,12 @@ describe('RegisterCostumerController', () => {
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('address'));
+  });
+
+  it('2 - should create entities with correct parameters', async () => {
+    const { sut, factory } = makeSut();
+    const customerFactory = jest.spyOn(factory, 'create');
+    await sut.handle(defaultHttpRequest);
+    expect(customerFactory).toHaveBeenCalledWith(defaultHttpRequest.body);
   });
 });
