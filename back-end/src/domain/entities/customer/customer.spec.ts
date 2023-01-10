@@ -6,7 +6,7 @@ import { makeSut as makeCustomerValidor } from './validators/customer-validators
 const makeSut = (props: CustomerProps) => {
   const { sut: customerValidator } = makeCustomerValidor();
   const sut = new Customer(props, customerValidator);
-  return sut;
+  return { sut, customerValidator };
 };
 
 describe('Customer', () => {
@@ -18,7 +18,26 @@ describe('Customer', () => {
       cpf: 'any_cpf',
       address: new Address(anyAddressProps),
     };
-    const sut = makeSut(sutProps);
+    const { sut } = makeSut(sutProps);
     expect(sut).toBeTruthy();
+  });
+
+  it('2 - should call isValid with correct parameters', () => {
+    const sutProps: CustomerProps = {
+      name: 'any_name',
+      email: 'any_email',
+      phone: 'any_phone',
+      cpf: 'any_cpf',
+      address: new Address(anyAddressProps),
+    };
+    const { sut, customerValidator } = makeSut(sutProps);
+    const isValidSpy = jest.spyOn(customerValidator, 'validate');
+    sut.isValid();
+    expect(isValidSpy).toHaveBeenCalledWith(
+      sutProps.name,
+      sutProps.email,
+      sutProps.phone,
+      sutProps.cpf,
+    );
   });
 });
