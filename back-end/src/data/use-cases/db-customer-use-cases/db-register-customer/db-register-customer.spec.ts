@@ -1,30 +1,5 @@
-import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-memory-customer-repositoriy';
-import { DbRegisterCustomer } from './db-register-customer';
-import { PersistenceCustomer } from '@domain/entities/customer/customer';
-
-export const defaultPersistenceCustomer: PersistenceCustomer = {
-  id: 'any_id',
-  name: 'any_name',
-  email: 'any_email',
-  cpf: 'any_cpf',
-  phone: 'any_phone',
-  address: {
-    street: 'any_street',
-    number: 'any_number',
-    complement: 'any_complement',
-    neighborhood: 'any_neighborhood',
-    city: 'any_city',
-    state: 'any_state',
-    country: 'any_country',
-    zipcode: 'any_zipcode',
-  },
-};
-
-const makeSut = () => {
-  const customerRepositoryStub = new InMemoryCustomerRepository();
-  const sut = new DbRegisterCustomer(customerRepositoryStub);
-  return { sut, customerRepositoryStub };
-};
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie';
+import { makeDbRegisterCustomerMock as makeSut } from '@tests/customer/mocks/use-cases/db-register-customer.mock';
 
 describe('DbRegisterCustomer', () => {
   it('1 - should call CustomerRepository with correct values', async () => {

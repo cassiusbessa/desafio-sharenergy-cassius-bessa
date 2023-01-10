@@ -1,20 +1,12 @@
-import { PersistenceCustomer } from '../../../../domain/entities/customer/customer';
-import { DbUpdateCustomer } from './db-update-customer';
-import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-memory-customer-repositoriy';
-import { DbRegisterCustomer } from '../db-register-customer/db-register-customer';
-import { defaultPersistenceCustomer } from '../db-register-customer/db-register-customer.spec';
+import { PersistenceCustomer } from '@domain/entities/customer/customer';
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie';
+import { makeDbUpdateCustomerMock as makeSut } from '@tests/customer/mocks/use-cases/db-update-customer.mock';
 
 const updatedCustomer: Partial<PersistenceCustomer> = {
   name: 'updated name',
   email: 'updated email',
 };
 
-const makeSut = () => {
-  const customerRepositoryStub = new InMemoryCustomerRepository();
-  const registerCustomer = new DbRegisterCustomer(customerRepositoryStub);
-  const sut = new DbUpdateCustomer(customerRepositoryStub);
-  return { sut, customerRepositoryStub, registerCustomer };
-};
 describe('DbUpdateCustomer', () => {
   it('1 - should call CustomerRepository with correct values', async () => {
     const { sut, customerRepositoryStub, registerCustomer } = makeSut();

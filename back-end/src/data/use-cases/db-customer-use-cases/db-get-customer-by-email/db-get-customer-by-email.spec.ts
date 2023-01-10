@@ -1,14 +1,5 @@
-import { defaultPersistenceCustomer } from './../db-register-customer/db-register-customer.spec';
-import { DbRegisterCustomer } from './../db-register-customer/db-register-customer';
-import { InMemoryCustomerRepository } from '@infra/in-memory-repositories/in-memory-customer-repositoriy';
-import { DbGetCustomerByEmail } from './db-get-customer-by-email';
-
-const makeSut = () => {
-  const customerRepositoryStub = new InMemoryCustomerRepository();
-  const registerCustomer = new DbRegisterCustomer(customerRepositoryStub);
-  const sut = new DbGetCustomerByEmail(customerRepositoryStub);
-  return { sut, customerRepositoryStub, registerCustomer };
-};
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie';
+import { makeDbGetByEmailCustomerMock as makeSut } from '@tests/customer/mocks/use-cases/db-get-customer-by-email.mock';
 
 describe('DbGetCustomerByEmail', () => {
   it('1 - should call CustomerRepository with correct values', async () => {
