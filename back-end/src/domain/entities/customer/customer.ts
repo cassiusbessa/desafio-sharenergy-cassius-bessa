@@ -1,9 +1,6 @@
+import { CustomerValidator, ValidatorResult } from '@domain/protocols';
 import { randomUUID } from 'crypto';
 import { AddressProps } from '../address/address';
-import {
-  CustomerValidators,
-  ValidatorResult,
-} from './validators/customer-validators';
 
 export interface CustomerProps {
   name: string;
@@ -20,12 +17,11 @@ export interface PersistenceCustomer extends CustomerProps {
 export class Customer {
   private props: CustomerProps;
   private readonly _id: string;
-  private customerValidator: CustomerValidators;
-  private validatorResult: ValidatorResult;
+  private customerValidator: CustomerValidator;
 
   constructor(
     props: CustomerProps,
-    customerValidator: CustomerValidators,
+    customerValidator: CustomerValidator,
     id?: string,
   ) {
     this.customerValidator = customerValidator;
@@ -34,13 +30,12 @@ export class Customer {
   }
 
   public isValid(): ValidatorResult {
-    this.validatorResult = this.customerValidator.validate(
+    return this.customerValidator.validate(
       this.props.name,
       this.props.email,
       this.props.phone,
       this.props.cpf,
     );
-    return this.validatorResult;
   }
 
   public getAllProps(): PersistenceCustomer {
