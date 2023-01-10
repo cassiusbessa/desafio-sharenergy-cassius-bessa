@@ -3,6 +3,7 @@ import {
   PhoneValidator,
   CpfValidator,
   ValidatorResult,
+  CustomerValidator,
 } from '@domain/protocols';
 
 export interface PropsValidators {
@@ -11,7 +12,7 @@ export interface PropsValidators {
   cpfValidator: CpfValidator;
 }
 
-export class CustomerValidators {
+export class CustomerValidators implements CustomerValidator {
   private readonly emailValidator: EmailValidator;
   private readonly phoneValidator: PhoneValidator;
   private readonly cpfValidator: CpfValidator;
@@ -70,4 +71,3 @@ export class CustomerValidators {
     return this.validatorResult;
   }
 }
-export { ValidatorResult };
