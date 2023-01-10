@@ -17,25 +17,14 @@ export interface PersistenceCustomer extends CustomerProps {
 export class Customer {
   private props: CustomerProps;
   private readonly _id: string;
-  private customerValidator: CustomerValidator;
 
-  constructor(
-    props: CustomerProps,
-    customerValidator: CustomerValidator,
-    id?: string,
-  ) {
-    this.customerValidator = customerValidator;
+  constructor(props: CustomerProps, id?: string) {
     this.props = props;
     this._id = id ?? randomUUID();
   }
 
-  public isValid(): ValidatorResult {
-    return this.customerValidator.validate(
-      this.props.name,
-      this.props.email,
-      this.props.phone,
-      this.props.cpf,
-    );
+  public static create(props: CustomerProps, id?: string): Customer {
+    return new Customer(props, id);
   }
 
   public getAllProps(): PersistenceCustomer {
