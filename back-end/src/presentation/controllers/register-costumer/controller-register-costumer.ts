@@ -1,5 +1,9 @@
-import { MissingParamError, InvalidParamError } from '../../errors';
-import { badRequest } from '../../helpers/http-helper';
+import {
+  MissingParamError,
+  InvalidParamError,
+  EmailInUseError,
+} from '../../errors';
+import { badRequest, forbidden } from '../../helpers/http-helper';
 import { Controller, HttpRequest } from 'src/presentation/protocols';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
@@ -36,6 +40,10 @@ export class ControllerRegisterCustomer implements Controller {
       );
     }
     const registered = await this.registerCustomer.register(httpRequest.body);
+
+    if (!registered) {
+      return forbidden(new EmailInUseError());
+    }
 
     return { statusCode: 201, body: { message: 'created' } };
   }
