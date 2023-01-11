@@ -70,4 +70,20 @@ export class CustomerValidators implements CustomerValidator {
     this.validateCpf(cpf);
     return this.validatorResult;
   }
+
+  updateValidate(name?: string, email?: string, phone?: string, cpf?: string) {
+    if (name) {
+      this.validateNameLength(name);
+    }
+    if (email) {
+      this.validateEmail(email);
+    }
+    if (phone) {
+      this.validatePhone(phone);
+    }
+    if (cpf) {
+      this.validateCpf(cpf);
+    }
+    return this.validatorResult;
+  }
 }

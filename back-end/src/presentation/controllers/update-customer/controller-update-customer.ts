@@ -23,5 +23,12 @@ export class ControllerUpdateCustomer {
         new MissingParamError('Update must be at least one field'),
       );
     }
+    const { name, email, phone, cpf, address } = httpRequest.body;
+    const isValid = this.customerValidator.updateValidate(
+      name,
+      email,
+      phone,
+      cpf,
+    );
   }
 }

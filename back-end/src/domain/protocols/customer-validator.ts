@@ -7,4 +7,10 @@ export interface CustomerValidator {
     phone: string,
     cpf: string,
   ) => ValidatorResult;
+  updateValidate: (
+    name: string,
+    email: string,
+    phone: string,
+    cpf: string,
+  ) => ValidatorResult;
 }
