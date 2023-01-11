@@ -1,4 +1,4 @@
-import { MissingParamError } from '../../errors';
+import { MissingParamError, InvalidParamError } from '../../errors';
 import { badRequest } from '../../helpers/http-helper';
 import { Controller, HttpRequest } from 'src/presentation/protocols';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
@@ -7,6 +7,7 @@ import { CustomerValidator, AddressValidator } from '@domain/protocols';
 export class ControllerRegisterCustomer implements Controller {
   private readonly registerCustomer: RegisterCustomer;
   private readonly customerValidator: CustomerValidator;
+  private readonly addressValidator: AddressValidator;
   constructor(
     registerCustomer: RegisterCustomer,
     customerValidator: CustomerValidator,
@@ -24,6 +25,10 @@ export class ControllerRegisterCustomer implements Controller {
     }
     const { name, email, phone, cpf, address } = httpRequest.body;
     const isValid = this.customerValidator.validate(name, email, phone, cpf);
+    if (!isValid.result) {
+      return badRequest(new InvalidParamError('customer: ' + isValid.message));
+    }
+
     return { statusCode: 201, body: { message: 'created' } };
   }
 }
