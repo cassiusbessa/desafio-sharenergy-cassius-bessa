@@ -1,6 +1,6 @@
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
 import { UpdateCustomer } from '@domain/use-cases/customer-use-cases/update-customer';
-import { MissingParamError } from '@presentation/errors';
+import { InvalidParamError, MissingParamError } from '@presentation/errors';
 import { badRequest } from '@presentation/helpers/http-helper';
 import { HttpRequest } from '@presentation/protocols';
 
@@ -30,5 +30,8 @@ export class ControllerUpdateCustomer {
       phone,
       cpf,
     );
+    if (!isValid.result) {
+      return badRequest(new InvalidParamError('customer: ' + isValid.message));
+    }
   }
 }
