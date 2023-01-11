@@ -5,9 +5,9 @@ import {
 } from '@domain/entities/customer/customer';
 export class InMemoryCustomerRepository implements CustomerRepository {
   private customers: PersistenceCustomer[] = [];
-  register(customer: PersistenceCustomer): Promise<boolean> {
+  register(customer: PersistenceCustomer): Promise<PersistenceCustomer> {
     this.customers.push(customer);
-    return Promise.resolve(true);
+    return Promise.resolve(customer);
   }
   getByEmail(email: string): Promise<PersistenceCustomer | null> {
     const customer = this.customers.find(
@@ -21,16 +21,16 @@ export class InMemoryCustomerRepository implements CustomerRepository {
   update(
     customer: Partial<PersistenceCustomer>,
     email: string,
-  ): Promise<boolean> {
+  ): Promise<PersistenceCustomer | null> {
     const index = this.customers.findIndex(
       (customer) => customer.email === email,
     );
     if (index === -1) {
-      return Promise.resolve(false);
+      return Promise.resolve(null);
     }
     customer.id = this.customers[index].id;
     this.customers[index] = { ...this.customers[index], ...customer };
-    return Promise.resolve(true);
+    return Promise.resolve(this.customers[index]);
   }
   delete(id: string): Promise<boolean> {
     const index = this.customers.findIndex((customer) => customer.id === id);

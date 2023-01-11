@@ -8,7 +8,7 @@ export class DbUpdateCustomer implements UpdateCustomer {
   async update(
     customer: Partial<PersistenceCustomer>,
     email: string,
-  ): Promise<boolean> {
+  ): Promise<PersistenceCustomer | false> {
     const isUpdated = await this.customerRepository.update(customer, email);
     return isUpdated;
   }

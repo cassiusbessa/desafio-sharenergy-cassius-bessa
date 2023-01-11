@@ -30,13 +30,16 @@ describe('DbUpdateCustomer', () => {
     ).rejects.toThrow();
   });
 
-  it('3 - should return true customer on success', async () => {
+  it('3 - should return a updated customer on success', async () => {
     const { sut, registerCustomer } = makeSut();
     await registerCustomer.register(defaultPersistenceCustomer);
     const isUpdated = await sut.update(
       updatedCustomer,
       defaultPersistenceCustomer.email,
     );
-    expect(isUpdated).toBe(true);
+    expect(isUpdated).toMatchObject({
+      ...defaultPersistenceCustomer,
+      ...updatedCustomer,
+    });
   });
 });

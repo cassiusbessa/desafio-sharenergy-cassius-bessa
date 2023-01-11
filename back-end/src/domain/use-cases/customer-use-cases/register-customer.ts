@@ -1,5 +1,8 @@
-import { CustomerProps } from '@domain/entities/customer/customer';
+import {
+  CustomerProps,
+  PersistenceCustomer,
+} from '@domain/entities/customer/customer';
 
 export interface RegisterCustomer {
-  register: (customer: CustomerProps) => Promise<boolean>;
+  register: (customer: CustomerProps) => Promise<PersistenceCustomer | false>;
 }

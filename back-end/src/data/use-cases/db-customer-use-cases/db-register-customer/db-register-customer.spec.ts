@@ -27,15 +27,15 @@ describe('DbRegisterCustomer', () => {
   it('4 - should return false on if email already exists', async () => {
     const { sut, customerRepositoryStub } = makeSut();
     jest
-      .spyOn(customerRepositoryStub, 'register')
-      .mockReturnValueOnce(Promise.resolve(false));
+      .spyOn(customerRepositoryStub, 'getByEmail')
+      .mockReturnValueOnce(Promise.resolve(defaultPersistenceCustomer));
     const isValid = await sut.register(defaultPersistenceCustomer);
     expect(isValid).toBe(false);
   });
 
-  it('5 - should return true on success', async () => {
+  it('5 - should return a created entitie success', async () => {
     const { sut } = makeSut();
     const isValid = await sut.register(defaultPersistenceCustomer);
-    expect(isValid).toBe(true);
+    expect(isValid).toMatchObject(defaultPersistenceCustomer);
   });
 });

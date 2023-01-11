@@ -45,6 +45,9 @@ export class ControllerRegisterCustomer implements Controller {
       return forbidden(new EmailInUseError());
     }
 
-    return { statusCode: 201, body: { message: 'created' } };
+    return {
+      statusCode: 201,
+      body: { message: 'Customer created successfully', customer: registered },
+    };
   }
 }

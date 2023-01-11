@@ -1,5 +1,8 @@
-import { CustomerProps } from '@domain/entities/customer/customer';
+import { PersistenceCustomer } from '@domain/entities/customer/customer';
 
 export interface UpdateCustomer {
-  update: (customer: CustomerProps, email: string) => Promise<boolean>;
+  update: (
+    customer: Partial<PersistenceCustomer>,
+    email: string,
+  ) => Promise<PersistenceCustomer | boolean>;
 }

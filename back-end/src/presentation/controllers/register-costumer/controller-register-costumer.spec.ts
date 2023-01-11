@@ -1,3 +1,4 @@
+import { defaultPersistenceCustomer } from './../../../tests/customer/mocks/entities/default-entitie.mock';
 import { httpRequest } from '@tests/customer/mocks/controller/http-register-customer.mock';
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
@@ -102,5 +103,12 @@ describe('RegisterCostumerController', () => {
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(403);
     expect(httpResponse.body).toEqual(new EmailInUseError());
+  });
+
+  it('8 - should return 201 if registerCustomer returns true', async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(201);
+    expect(httpResponse.body.message).toEqual('Customer created successfully');
   });
 });
