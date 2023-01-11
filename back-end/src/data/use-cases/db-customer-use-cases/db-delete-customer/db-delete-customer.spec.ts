@@ -1,4 +1,4 @@
-import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie';
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { makeDbDeleteCustomerMock as makeSut } from '@tests/customer/mocks/use-cases/db-delete-customer.mock';
 
 describe('DbDeleteCustomer', () => {

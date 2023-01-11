@@ -10,7 +10,6 @@ export const defaultPersistenceCustomer: PersistenceCustomer = {
     street: 'any_street',
     number: 'any_number',
     complement: 'any_complement',
-    neighborhood: 'any_neighborhood',
     city: 'any_city',
     state: 'any_state',
     country: 'any_country',

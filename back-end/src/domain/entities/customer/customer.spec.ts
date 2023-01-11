@@ -1,6 +1,5 @@
-import { anyAddressProps } from '../address/address.spec';
 import { Customer, CustomerProps } from './customer';
-import { Address } from '../address/address';
+import { anyAddressProps } from '@tests/customer/mocks/entities/default-address.mock';
 
 describe('Customer', () => {
   it('1 - should be able to create a Customer', () => {
@@ -9,7 +8,7 @@ describe('Customer', () => {
       email: 'any_email',
       phone: 'any_phone',
       cpf: 'any_cpf',
-      address: new Address(anyAddressProps),
+      address: anyAddressProps,
     };
     const sut = new Customer(sutProps);
     expect(sut).toBeTruthy();
@@ -20,7 +19,7 @@ describe('Customer', () => {
       email: 'any_email',
       phone: 'any_phone',
       cpf: 'any_cpf',
-      address: new Address(anyAddressProps),
+      address: anyAddressProps,
     };
     const createSpy = jest.spyOn(Customer, 'create');
     Customer.create(sutProps);

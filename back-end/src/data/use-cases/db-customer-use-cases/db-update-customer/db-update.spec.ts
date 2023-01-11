@@ -1,5 +1,5 @@
 import { PersistenceCustomer } from '@domain/entities/customer/customer';
-import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie';
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { makeDbUpdateCustomerMock as makeSut } from '@tests/customer/mocks/use-cases/db-update-customer.mock';
 
 const updatedCustomer: Partial<PersistenceCustomer> = {

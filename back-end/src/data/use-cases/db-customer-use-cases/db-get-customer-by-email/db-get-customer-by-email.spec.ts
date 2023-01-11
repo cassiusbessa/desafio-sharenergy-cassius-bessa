@@ -1,4 +1,4 @@
-import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie';
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { makeDbGetByEmailCustomerMock as makeSut } from '@tests/customer/mocks/use-cases/db-get-customer-by-email.mock';
 
 describe('DbGetCustomerByEmail', () => {

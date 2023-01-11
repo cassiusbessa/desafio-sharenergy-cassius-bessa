@@ -1,4 +1,4 @@
-import { makeDefaultCustomerValidator as makeSut } from '@tests/customer/mocks/entities/validators/default-customer-validator';
+import { makeDefaultCustomerValidator as makeSut } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 
 describe('Customer Validators', () => {
   it('1 - should return false if name is less than 3 characters', () => {
