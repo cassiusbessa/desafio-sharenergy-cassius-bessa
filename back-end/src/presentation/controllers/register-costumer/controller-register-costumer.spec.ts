@@ -56,4 +56,18 @@ describe('RegisterCostumerController', () => {
       new InvalidParamError('customer: any_message'),
     );
   });
+
+  it('4 - shoud call address validate method with correct params', async () => {
+    const { sut, addressValidator } = makeSut();
+    const validateSpy = jest.spyOn(addressValidator, 'validate');
+    await sut.handle(httpRequest);
+    expect(validateSpy).toHaveBeenCalledWith({
+      street: 'any_street',
+      number: 'any_number',
+      city: 'any_city',
+      state: 'any_state',
+      country: 'any_country',
+      zipcode: 'any_zipcode',
+    });
+  });
 });
