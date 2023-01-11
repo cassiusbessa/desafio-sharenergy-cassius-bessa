@@ -2,7 +2,6 @@ export interface AddressProps {
   street: string;
   number: string;
   complement?: string;
-  neighborhood: string;
   city: string;
   state: string;
   country: string;
@@ -16,15 +15,10 @@ export class Address {
     this.props = props;
     this.validateStreetLength(props.street);
     this.validateNumberLength(props.number);
-    this.validateNeighborhoodLength(props.neighborhood);
     this.validateCityLength(props.city);
     this.validateStateLength(props.state);
     this.validateCountryLength(props.country);
     this.validateZipcodeLength(props.zipcode);
-  }
-
-  get street(): string {
-    return this.props.street;
   }
 
   private validateStreetLength(street: string) {
@@ -33,32 +27,10 @@ export class Address {
     }
   }
 
-  get number(): string {
-    return this.props.number;
-  }
-
   private validateNumberLength(number: string) {
     if (number.length < 1) {
       throw new Error('Number must have at least 1 character');
     }
-  }
-
-  get complement(): string {
-    return this.props.complement;
-  }
-
-  get neighborhood(): string {
-    return this.props.neighborhood;
-  }
-
-  private validateNeighborhoodLength(neighborhood: string) {
-    if (neighborhood.length < 3) {
-      throw new Error('Neighborhood must have at least 3 characters');
-    }
-  }
-
-  get city(): string {
-    return this.props.city;
   }
 
   private validateCityLength(city: string) {
@@ -67,28 +39,16 @@ export class Address {
     }
   }
 
-  get state(): string {
-    return this.props.state;
-  }
-
   private validateStateLength(state: string) {
     if (state.length < 2) {
       throw new Error('State must have at least 2 characters');
     }
   }
 
-  get country(): string {
-    return this.props.country;
-  }
-
   private validateCountryLength(country: string) {
     if (country.length < 3) {
       throw new Error('Country must have at least 3 characters');
     }
-  }
-
-  get zipcode(): string {
-    return this.props.zipcode;
   }
 
   public validateZipcodeLength(zipcode: string) {
@@ -102,6 +62,8 @@ export class Address {
   }
 
   public getFullAddress(): string {
-    return `${this.street}, ${this.number}, ${this.complement}, ${this.neighborhood}, ${this.city}, ${this.state}, ${this.country}, ${this.zipcode}`;
+    const { street, number, complement, city, state, country, zipcode } =
+      this.props;
+    return `${street}, ${number}, ${complement}, ${city}, ${state}, ${country}, ${zipcode}`;
   }
 }

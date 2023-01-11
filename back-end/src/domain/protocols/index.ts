@@ -4,3 +4,4 @@ export * from './cpf-validator';
 export * from './validator-result';
 export * from './customer-validator';
 export * from './customer-factory';
+export * from './address-validator';
