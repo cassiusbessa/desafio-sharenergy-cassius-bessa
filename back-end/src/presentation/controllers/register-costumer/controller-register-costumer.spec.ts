@@ -1,56 +1,19 @@
-import {
-  CustomerFactory,
-  CustomerFactoryReturn,
-} from '@domain/protocols/customer-factory';
-import { Address } from '@domain/entities/address/address';
-import { anyAddressProps } from '@domain/entities/address/address.spec';
-import {
-  Customer,
-  CustomerProps,
-  PersistenceCustomer,
-} from '@domain/entities/customer/customer';
-import { makeSut as makeCustomerValidor } from '@domain/entities/customer/validators/customer-validators.spec';
-import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
-import { MissingParamError } from '../../errors';
+import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
+import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
+import { makeDbRegisterCustomerMock } from '@tests/customer/mocks/use-cases/db-register-customer.mock';
+import { MissingParamError } from '../../errors/missing-param-error';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
-import { PropsValidators } from '@domain/entities/customer/validators/customer-validators';
-
-const defaultHttpRequest = {
-  body: {
-    name: 'any_name',
-    email: 'any_email',
-    phone: 'any_phone',
-    cpf: 'any_cpf',
-    address: new Address(anyAddressProps),
-  },
-};
-const customerFactory = (): CustomerFactory => {
-  class CustomerFactoryStub implements CustomerFactory {
-    public propsValidator: PropsValidators;
-
-    public create(customerProps: CustomerProps): CustomerFactoryReturn {
-      const { sut: validator } = makeCustomerValidor();
-      const customer = new Customer(customerProps, validator);
-      return { customer, validator };
-    }
-  }
-  return new CustomerFactoryStub();
-};
-
-const makeRegisterCustomer = (): RegisterCustomer => {
-  class RegisterCustomerStub implements RegisterCustomer {
-    async register(customer: PersistenceCustomer): Promise<boolean> {
-      return await new Promise((resolve) => resolve(true));
-    }
-  }
-  return new RegisterCustomerStub();
-};
 
 const makeSut = () => {
-  const registerCustomer = makeRegisterCustomer();
-  const factory = customerFactory();
-  const sut = new ControllerRegisterCustomer(registerCustomer, factory);
-  return { sut, registerCustomer, factory };
+  const { sut: registerCustomer } = makeDbRegisterCustomerMock();
+  const { sut: customerValidator } = makeDefaultCustomerValidator();
+  const { sut: addressValidator } = makeDefaultAddressValidator();
+  const sut = new ControllerRegisterCustomer(
+    registerCustomer,
+    customerValidator,
+    addressValidator,
+  );
+  return { sut, registerCustomer, customerValidator, addressValidator };
 };
 
 describe('RegisterCostumerController', () => {
@@ -69,10 +32,31 @@ describe('RegisterCostumerController', () => {
     expect(httpResponse.body).toEqual(new MissingParamError('address'));
   });
 
-  it('2 - should create entities with correct parameters', async () => {
-    const { sut, factory } = makeSut();
-    const customerFactory = jest.spyOn(factory, 'create');
-    await sut.handle(defaultHttpRequest);
-    expect(customerFactory).toHaveBeenCalledWith(defaultHttpRequest.body);
+  it('2 - should call customer validate method with correct params', async () => {
+    const { sut, customerValidator } = makeSut();
+    const validateSpy = jest.spyOn(customerValidator, 'validate');
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        phone: 'any_phone',
+        cpf: 'any_cpf',
+        address: {
+          street: 'any_street',
+          number: 'any_number',
+          city: 'any_city',
+          state: 'any_state',
+          country: 'any_country',
+          zipcode: 'any_zipcode',
+        },
+      },
+    };
+    await sut.handle(httpRequest);
+    expect(validateSpy).toHaveBeenCalledWith(
+      'any_name',
+      'any_email',
+      'any_phone',
+      'any_cpf',
+    );
   });
 });
