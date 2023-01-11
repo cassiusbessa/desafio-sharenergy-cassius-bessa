@@ -82,4 +82,11 @@ describe('RegisterCostumerController', () => {
       new InvalidParamError('address: any_message'),
     );
   });
+
+  it('6 - should call registerCustomer with correct params', async () => {
+    const { sut, registerCustomer } = makeSut();
+    const registerSpy = jest.spyOn(registerCustomer, 'register');
+    await sut.handle(httpRequest);
+    expect(registerSpy).toHaveBeenCalledWith(httpRequest.body);
+  });
 });
