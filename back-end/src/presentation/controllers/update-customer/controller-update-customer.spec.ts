@@ -1,3 +1,4 @@
+import { httpRequest } from '@tests/customer/mocks/controller/http-update-customer.mock';
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 import { makeDbUpdateCustomerMock } from '@tests/customer/mocks/use-cases/db-update-customer.mock';
@@ -27,5 +28,13 @@ describe('UpdateCustomerController', () => {
     expect(httpResponse.body).toEqual(
       new MissingParamError('Update must be at least one field'),
     );
+  });
+
+  it('2 - should call customer update validate method with correct params', async () => {
+    const { sut, customerValidator } = makeSut();
+    const validateSpy = jest.spyOn(customerValidator, 'updateValidate');
+    await sut.handle(httpRequest);
+    const { name, cpf } = httpRequest.body;
+    expect(validateSpy).toHaveBeenCalledWith(name, undefined, undefined, cpf);
   });
 });
