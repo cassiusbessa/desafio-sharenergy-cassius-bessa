@@ -2,7 +2,7 @@ import { httpRequest } from '@tests/customer/mocks/controller/http-register-cust
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 import { makeDbRegisterCustomerMock } from '@tests/customer/mocks/use-cases/db-register-customer.mock';
-import { MissingParamError } from '../../errors/missing-param-error';
+import { MissingParamError, InvalidParamError } from '../../errors';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
 
 const makeSut = () => {
@@ -42,6 +42,18 @@ describe('RegisterCostumerController', () => {
       'any_email',
       'any_phone',
       'any_cpf',
+    );
+  });
+
+  it('3 - should return 400 if customer validate method returns false', async () => {
+    const { sut, customerValidator } = makeSut();
+    jest
+      .spyOn(customerValidator, 'validate')
+      .mockReturnValueOnce({ result: false, message: 'any_message' });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new InvalidParamError('customer: any_message'),
     );
   });
 });
