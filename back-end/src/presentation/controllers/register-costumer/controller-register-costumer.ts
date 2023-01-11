@@ -35,6 +35,7 @@ export class ControllerRegisterCustomer implements Controller {
         new InvalidParamError('address: ' + isValidAddress.message),
       );
     }
+    const registered = await this.registerCustomer.register(httpRequest.body);
 
     return { statusCode: 201, body: { message: 'created' } };
   }
