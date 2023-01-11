@@ -2,7 +2,7 @@ import { httpRequest } from '@tests/customer/mocks/controller/http-update-custom
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 import { makeDbUpdateCustomerMock } from '@tests/customer/mocks/use-cases/db-update-customer.mock';
-import { MissingParamError } from '../../errors';
+import { InvalidParamError, MissingParamError } from '../../errors';
 import { ControllerUpdateCustomer } from './controller-update-customer';
 
 const makeSut = () => {
@@ -36,5 +36,17 @@ describe('UpdateCustomerController', () => {
     await sut.handle(httpRequest);
     const { name, cpf } = httpRequest.body;
     expect(validateSpy).toHaveBeenCalledWith(name, undefined, undefined, cpf);
+  });
+
+  it('3 - should return 400 if customer update validate method returns false', async () => {
+    const { sut, customerValidator } = makeSut();
+    jest
+      .spyOn(customerValidator, 'updateValidate')
+      .mockReturnValueOnce({ result: false, message: 'any_message' });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new InvalidParamError('customer: any_message'),
+    );
   });
 });
