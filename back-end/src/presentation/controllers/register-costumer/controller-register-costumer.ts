@@ -30,6 +30,11 @@ export class ControllerRegisterCustomer implements Controller {
       return badRequest(new InvalidParamError('customer: ' + isValid.message));
     }
     const isValidAddress = this.addressValidator.validate(address);
+    if (!isValidAddress.result) {
+      return badRequest(
+        new InvalidParamError('address: ' + isValidAddress.message),
+      );
+    }
 
     return { statusCode: 201, body: { message: 'created' } };
   }
