@@ -111,4 +111,36 @@ describe('RegisterCostumerController', () => {
     expect(httpResponse.statusCode).toBe(201);
     expect(httpResponse.body.message).toEqual('Customer created successfully');
   });
+
+  it('9 - should return 500 if registerCustomer throws', async () => {
+    const { sut, registerCustomer } = makeSut();
+    jest
+      .spyOn(registerCustomer, 'register')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      );
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new Error());
+  });
+
+  it('10 - should return 500 if customerValidator throws', async () => {
+    const { sut, customerValidator } = makeSut();
+    jest.spyOn(customerValidator, 'validate').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new Error());
+  });
+
+  it('11 - should return 500 if addressValidator throws', async () => {
+    const { sut, addressValidator } = makeSut();
+    jest.spyOn(addressValidator, 'validate').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new Error());
+  });
 });
