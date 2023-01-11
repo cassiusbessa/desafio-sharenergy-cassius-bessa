@@ -1,3 +1,4 @@
+import { httpRequest } from '@tests/customer/mocks/controller/http-register-customer.mock';
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 import { makeDbRegisterCustomerMock } from '@tests/customer/mocks/use-cases/db-register-customer.mock';
@@ -35,22 +36,6 @@ describe('RegisterCostumerController', () => {
   it('2 - should call customer validate method with correct params', async () => {
     const { sut, customerValidator } = makeSut();
     const validateSpy = jest.spyOn(customerValidator, 'validate');
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'any_email',
-        phone: 'any_phone',
-        cpf: 'any_cpf',
-        address: {
-          street: 'any_street',
-          number: 'any_number',
-          city: 'any_city',
-          state: 'any_state',
-          country: 'any_country',
-          zipcode: 'any_zipcode',
-        },
-      },
-    };
     await sut.handle(httpRequest);
     expect(validateSpy).toHaveBeenCalledWith(
       'any_name',
