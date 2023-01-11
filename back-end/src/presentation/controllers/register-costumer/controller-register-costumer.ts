@@ -2,17 +2,18 @@ import { MissingParamError } from '../../errors';
 import { badRequest } from '../../helpers/http-helper';
 import { Controller, HttpRequest } from 'src/presentation/protocols';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
-import { CustomerFactory } from '@domain/protocols';
+import { CustomerValidator, AddressValidator } from '@domain/protocols';
 
 export class ControllerRegisterCustomer implements Controller {
   private readonly registerCustomer: RegisterCustomer;
-  customerFactory: CustomerFactory;
+  private readonly customerValidator: CustomerValidator;
   constructor(
     registerCustomer: RegisterCustomer,
-    customerFactory: CustomerFactory,
+    customerValidator: CustomerValidator,
+    addressValidator: AddressValidator,
   ) {
     this.registerCustomer = registerCustomer;
-    this.customerFactory = customerFactory;
+    this.customerValidator = customerValidator;
   }
   async handle(httpRequest: HttpRequest) {
     const requiredFields = ['name', 'email', 'phone', 'cpf', 'address'];
@@ -22,13 +23,7 @@ export class ControllerRegisterCustomer implements Controller {
       }
     }
     const { name, email, phone, cpf, address } = httpRequest.body;
-    const { customer } = this.customerFactory.create({
-      name,
-      email,
-      phone,
-      cpf,
-      address,
-    });
+    const isValid = this.customerValidator.validate(name, email, phone, cpf);
     return { statusCode: 201, body: { message: 'created' } };
   }
 }
