@@ -1,4 +1,3 @@
-import { defaultPersistenceCustomer } from './../../../tests/customer/mocks/entities/default-entitie.mock';
 import { httpRequest } from '@tests/customer/mocks/controller/http-register-customer.mock';
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
@@ -7,6 +6,7 @@ import {
   MissingParamError,
   InvalidParamError,
   EmailInUseError,
+  ServerError,
 } from '../../errors';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
 
@@ -109,7 +109,9 @@ describe('RegisterCostumerController', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(201);
-    expect(httpResponse.body.message).toEqual('Customer created successfully');
+    expect(httpResponse.body.message).toEqual(
+      'Customer registered successfully',
+    );
   });
 
   it('9 - should return 500 if registerCustomer throws', async () => {
@@ -121,7 +123,7 @@ describe('RegisterCostumerController', () => {
       );
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new Error());
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 
   it('10 - should return 500 if customerValidator throws', async () => {
@@ -131,7 +133,7 @@ describe('RegisterCostumerController', () => {
     });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new Error());
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 
   it('11 - should return 500 if addressValidator throws', async () => {
@@ -141,6 +143,6 @@ describe('RegisterCostumerController', () => {
     });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new Error());
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 });

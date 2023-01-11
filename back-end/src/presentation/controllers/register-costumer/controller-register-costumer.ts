@@ -3,7 +3,12 @@ import {
   InvalidParamError,
   EmailInUseError,
 } from '../../errors';
-import { badRequest, forbidden } from '../../helpers/http-helper';
+import {
+  badRequest,
+  forbidden,
+  ok,
+  serverError,
+} from '../../helpers/http-helper';
 import { Controller, HttpRequest } from 'src/presentation/protocols';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
@@ -48,18 +53,9 @@ export class ControllerRegisterCustomer implements Controller {
         return forbidden(new EmailInUseError());
       }
 
-      return {
-        statusCode: 201,
-        body: {
-          message: 'Customer created successfully',
-          customer: registered,
-        },
-      };
+      return ok(registered, 201, 'Customer registered successfully');
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: error,
-      };
+      return serverError();
     }
   }
 }
