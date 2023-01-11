@@ -70,4 +70,16 @@ describe('RegisterCostumerController', () => {
       zipcode: 'any_zipcode',
     });
   });
+
+  it('5 - should return 400 if address validate method returns false', async () => {
+    const { sut, addressValidator } = makeSut();
+    jest
+      .spyOn(addressValidator, 'validate')
+      .mockReturnValueOnce({ result: false, message: 'any_message' });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new InvalidParamError('address: any_message'),
+    );
+  });
 });
