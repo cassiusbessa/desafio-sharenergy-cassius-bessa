@@ -22,32 +22,44 @@ export class ControllerRegisterCustomer implements Controller {
     this.customerValidator = customerValidator;
   }
   async handle(httpRequest: HttpRequest) {
-    const requiredFields = ['name', 'email', 'phone', 'cpf', 'address'];
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        return badRequest(new MissingParamError(field));
+    try {
+      const requiredFields = ['name', 'email', 'phone', 'cpf', 'address'];
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field));
+        }
       }
-    }
-    const { name, email, phone, cpf, address } = httpRequest.body;
-    const isValid = this.customerValidator.validate(name, email, phone, cpf);
-    if (!isValid.result) {
-      return badRequest(new InvalidParamError('customer: ' + isValid.message));
-    }
-    const isValidAddress = this.addressValidator.validate(address);
-    if (!isValidAddress.result) {
-      return badRequest(
-        new InvalidParamError('address: ' + isValidAddress.message),
-      );
-    }
-    const registered = await this.registerCustomer.register(httpRequest.body);
+      const { name, email, phone, cpf, address } = httpRequest.body;
+      const isValid = this.customerValidator.validate(name, email, phone, cpf);
+      if (!isValid.result) {
+        return badRequest(
+          new InvalidParamError('customer: ' + isValid.message),
+        );
+      }
+      const isValidAddress = this.addressValidator.validate(address);
+      if (!isValidAddress.result) {
+        return badRequest(
+          new InvalidParamError('address: ' + isValidAddress.message),
+        );
+      }
+      const registered = await this.registerCustomer.register(httpRequest.body);
 
-    if (!registered) {
-      return forbidden(new EmailInUseError());
-    }
+      if (!registered) {
+        return forbidden(new EmailInUseError());
+      }
 
-    return {
-      statusCode: 201,
-      body: { message: 'Customer created successfully', customer: registered },
-    };
+      return {
+        statusCode: 201,
+        body: {
+          message: 'Customer created successfully',
+          customer: registered,
+        },
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: error,
+      };
+    }
   }
 }
