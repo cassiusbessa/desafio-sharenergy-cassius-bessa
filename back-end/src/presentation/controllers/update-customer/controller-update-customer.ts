@@ -33,5 +33,6 @@ export class ControllerUpdateCustomer {
     if (!isValid.result) {
       return badRequest(new InvalidParamError('customer: ' + isValid.message));
     }
+    const isValidAddress = this.addressValidator.updateValidate(address);
   }
 }

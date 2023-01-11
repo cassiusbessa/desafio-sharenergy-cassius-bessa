@@ -3,4 +3,5 @@ import { ValidatorResult } from '.';
 
 export interface AddressValidator {
   validate: (address: AddressProps) => ValidatorResult;
+  updateValidate: (address: AddressProps) => ValidatorResult;
 }

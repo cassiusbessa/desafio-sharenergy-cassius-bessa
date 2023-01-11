@@ -72,4 +72,32 @@ export class AddressValidators implements AddressValidator {
 
     return this.validatorResult;
   }
+
+  updateValidate(address: Partial<AddressProps>): ValidatorResult {
+    if (address.street) {
+      this.validateStreetLength(address.street);
+    }
+
+    if (address.number) {
+      this.validateNumberLength(address.number);
+    }
+
+    if (address.city) {
+      this.validateCityLength(address.city);
+    }
+
+    if (address.state) {
+      this.validateStateLength(address.state);
+    }
+
+    if (address.country) {
+      this.validateCountryLength(address.country);
+    }
+
+    if (address.zipcode) {
+      this.validateZipCodeLength(address.zipcode);
+    }
+
+    return this.validatorResult;
+  }
 }
