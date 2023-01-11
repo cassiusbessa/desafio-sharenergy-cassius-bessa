@@ -2,7 +2,11 @@ import { httpRequest } from '@tests/customer/mocks/controller/http-register-cust
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 import { makeDbRegisterCustomerMock } from '@tests/customer/mocks/use-cases/db-register-customer.mock';
-import { MissingParamError, InvalidParamError } from '../../errors';
+import {
+  MissingParamError,
+  InvalidParamError,
+  EmailInUseError,
+} from '../../errors';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
 
 const makeSut = () => {
@@ -88,5 +92,15 @@ describe('RegisterCostumerController', () => {
     const registerSpy = jest.spyOn(registerCustomer, 'register');
     await sut.handle(httpRequest);
     expect(registerSpy).toHaveBeenCalledWith(httpRequest.body);
+  });
+
+  it('7 - should return 403 if registerCustomer returns false', async () => {
+    const { sut, registerCustomer } = makeSut();
+    jest
+      .spyOn(registerCustomer, 'register')
+      .mockReturnValueOnce(new Promise((resolve) => resolve(false)));
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(403);
+    expect(httpResponse.body).toEqual(new EmailInUseError());
   });
 });
