@@ -13,6 +13,7 @@ export class ControllerRegisterCustomer implements Controller {
     customerValidator: CustomerValidator,
     addressValidator: AddressValidator,
   ) {
+    this.addressValidator = addressValidator;
     this.registerCustomer = registerCustomer;
     this.customerValidator = customerValidator;
   }
@@ -28,6 +29,7 @@ export class ControllerRegisterCustomer implements Controller {
     if (!isValid.result) {
       return badRequest(new InvalidParamError('customer: ' + isValid.message));
     }
+    const isValidAddress = this.addressValidator.validate(address);
 
     return { statusCode: 201, body: { message: 'created' } };
   }
