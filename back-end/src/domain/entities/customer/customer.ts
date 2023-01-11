@@ -8,6 +8,7 @@ export interface CustomerProps {
   phone: string;
   cpf: string;
   address: AddressProps;
+  id?: string;
 }
 
 export interface PersistenceCustomer extends CustomerProps {
@@ -20,7 +21,7 @@ export class Customer {
 
   constructor(props: CustomerProps, id?: string) {
     this.props = props;
-    this._id = id ?? randomUUID();
+    this._id = props.id ?? randomUUID();
   }
 
   public static create(props: CustomerProps, id?: string): Customer {
