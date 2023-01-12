@@ -69,4 +69,11 @@ describe('UpdateCustomerController', () => {
       new InvalidParamError('address: any_message'),
     );
   });
+  it('6 - should call updateCustomer with correct params', async () => {
+    const { sut, updateCustomer } = makeSut();
+    const updateSpy = jest.spyOn(updateCustomer, 'update');
+    await sut.handle(httpRequest);
+    const { id } = httpRequest.params;
+    expect(updateSpy).toHaveBeenCalledWith(httpRequest.body, id);
+  });
 });
