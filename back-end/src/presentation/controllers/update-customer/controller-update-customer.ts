@@ -6,7 +6,12 @@ import {
   MissingParamError,
   NotFound,
 } from '@presentation/errors';
-import { badRequest, notFound, ok } from '@presentation/helpers/http-helper';
+import {
+  badRequest,
+  notFound,
+  ok,
+  serverError,
+} from '@presentation/helpers/http-helper';
 import { HttpRequest } from '@presentation/protocols';
 
 export class ControllerUpdateCustomer {
@@ -23,33 +28,39 @@ export class ControllerUpdateCustomer {
     this.customerValidator = customerValidator;
   }
   async handle(httpRequest: HttpRequest) {
-    if (Object.keys(httpRequest.body).length === 0) {
-      return badRequest(
-        new MissingParamError('Update must be at least one field'),
+    try {
+      if (Object.keys(httpRequest.body).length === 0) {
+        return badRequest(
+          new MissingParamError('Update must be at least one field'),
+        );
+      }
+      const { name, email, phone, cpf, address } = httpRequest.body;
+      const isValid = this.customerValidator.updateValidate(
+        name,
+        email,
+        phone,
+        cpf,
       );
-    }
-    const { name, email, phone, cpf, address } = httpRequest.body;
-    const isValid = this.customerValidator.updateValidate(
-      name,
-      email,
-      phone,
-      cpf,
-    );
-    if (!isValid.result) {
-      return badRequest(new InvalidParamError('customer: ' + isValid.message));
-    }
-    const isValidAddress = this.addressValidator.updateValidate(address);
-    if (!isValidAddress.result) {
-      return badRequest(
-        new InvalidParamError('address: ' + isValidAddress.message),
-      );
-    }
-    const { id } = httpRequest.params;
+      if (!isValid.result) {
+        return badRequest(
+          new InvalidParamError('customer: ' + isValid.message),
+        );
+      }
+      const isValidAddress = this.addressValidator.updateValidate(address);
+      if (!isValidAddress.result) {
+        return badRequest(
+          new InvalidParamError('address: ' + isValidAddress.message),
+        );
+      }
+      const { id } = httpRequest.params;
 
-    const customer = await this.updateCustomer.update(httpRequest.body, id);
-    if (!customer) {
-      return notFound(new NotFound('Customer'));
+      const customer = await this.updateCustomer.update(httpRequest.body, id);
+      if (!customer) {
+        return notFound(new NotFound('Customer'));
+      }
+      return ok(customer, 200, 'Customer updated successfully');
+    } catch (error) {
+      return serverError();
     }
-    return ok(customer, 200, 'Customer updated successfully');
   }
 }
