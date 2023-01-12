@@ -3,7 +3,12 @@ import { httpRequest } from '@tests/customer/mocks/controller/http-update-custom
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
 import { makeDbUpdateCustomerMock } from '@tests/customer/mocks/use-cases/db-update-customer.mock';
-import { InvalidParamError, MissingParamError, NotFound } from '../../errors';
+import {
+  InvalidParamError,
+  MissingParamError,
+  NotFound,
+  ServerError,
+} from '../../errors';
 import { ControllerUpdateCustomer } from './controller-update-customer';
 
 const makeSut = () => {
@@ -97,5 +102,39 @@ describe('UpdateCustomerController', () => {
       data: defaultPersistenceCustomer,
       message: 'Customer updated successfully',
     });
+  });
+
+  it('9 - should return 500 if updateCustomer throws', async () => {
+    const { sut, updateCustomer } = makeSut();
+    jest.spyOn(updateCustomer, 'update').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
+  });
+
+  it('10 - should return 500 if customerValidator throws', async () => {
+    const { sut, customerValidator } = makeSut();
+    jest
+      .spyOn(customerValidator, 'updateValidate')
+      .mockImplementationOnce(() => {
+        throw new Error();
+      });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
+  });
+
+  it('11 - should return 500 if addressValidator throws', async () => {
+    const { sut, addressValidator } = makeSut();
+    jest
+      .spyOn(addressValidator, 'updateValidate')
+      .mockImplementationOnce(() => {
+        throw new Error();
+      });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 });
