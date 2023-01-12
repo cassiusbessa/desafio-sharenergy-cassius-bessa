@@ -15,4 +15,10 @@ describe('DeleteCustomerController', () => {
     const httpResponse = await sut.handle({ params: { id: 'any_id' } });
     expect(httpResponse.statusCode).toBe(200);
   });
+  it('3 - should return 500 if deleteCustomer throws', async () => {
+    const { sut, deleteCustomer } = makeSut();
+    jest.spyOn(deleteCustomer, 'delete').mockRejectedValueOnce(new Error());
+    const httpResponse = await sut.handle({ params: { id: 'any_id' } });
+    expect(httpResponse.statusCode).toBe(500);
+  });
 });
