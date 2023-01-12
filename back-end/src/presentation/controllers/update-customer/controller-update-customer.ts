@@ -1,8 +1,12 @@
 import { httpRequest } from './../../../tests/customer/mocks/controller/http-register-customer.mock';
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
 import { UpdateCustomer } from '@domain/use-cases/customer-use-cases/update-customer';
-import { InvalidParamError, MissingParamError } from '@presentation/errors';
-import { badRequest } from '@presentation/helpers/http-helper';
+import {
+  InvalidParamError,
+  MissingParamError,
+  NotFound,
+} from '@presentation/errors';
+import { badRequest, notFound } from '@presentation/helpers/http-helper';
 import { HttpRequest } from '@presentation/protocols';
 
 export class ControllerUpdateCustomer {
@@ -43,5 +47,8 @@ export class ControllerUpdateCustomer {
     const { id } = httpRequest.params;
 
     const customer = await this.updateCustomer.update(httpRequest.body, id);
+    if (!customer) {
+      return notFound(new NotFound('Customer'));
+    }
   }
 }

@@ -7,4 +7,7 @@ export const httpRequest = {
       number: 'new_number',
     },
   },
+  params: {
+    id: 'any_id',
+  },
 };
