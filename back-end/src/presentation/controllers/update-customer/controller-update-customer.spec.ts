@@ -1,3 +1,4 @@
+import { defaultPersistenceCustomer } from './../../../tests/customer/mocks/entities/default-entitie.mock';
 import { httpRequest } from '@tests/customer/mocks/controller/http-update-customer.mock';
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
@@ -83,5 +84,18 @@ describe('UpdateCustomerController', () => {
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(404);
     expect(httpResponse.body).toEqual(new NotFound('Customer'));
+  });
+
+  it('8 - should return 200 if updateCustomer returns a customer', async () => {
+    const { sut, updateCustomer } = makeSut();
+    jest
+      .spyOn(updateCustomer, 'update')
+      .mockReturnValueOnce(Promise.resolve(defaultPersistenceCustomer));
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({
+      data: defaultPersistenceCustomer,
+      message: 'Customer updated successfully',
+    });
   });
 });
