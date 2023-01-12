@@ -1,26 +1,11 @@
 import { httpRequest } from '@tests/customer/mocks/controller/http-register-customer.mock';
-import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
-import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
-import { makeDbRegisterCustomerMock } from '@tests/customer/mocks/use-cases/db-register-customer.mock';
 import {
   MissingParamError,
   InvalidParamError,
   EmailInUseError,
   ServerError,
 } from '@presentation/errors';
-import { ControllerRegisterCustomer } from './controller-register-costumer';
-
-const makeSut = () => {
-  const { sut: registerCustomer } = makeDbRegisterCustomerMock();
-  const { sut: customerValidator } = makeDefaultCustomerValidator();
-  const { sut: addressValidator } = makeDefaultAddressValidator();
-  const sut = new ControllerRegisterCustomer(
-    registerCustomer,
-    customerValidator,
-    addressValidator,
-  );
-  return { sut, registerCustomer, customerValidator, addressValidator };
-};
+import { makeDefaultControllerRegisterCustomer as makeSut } from '@tests/customer/mocks/controller/default-controller-register-customer.mock';
 
 describe('RegisterCostumerController', () => {
   it('1 - should return 400 if any parameters not provided', async () => {

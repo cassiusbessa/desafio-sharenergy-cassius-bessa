@@ -1,13 +1,6 @@
 import { ServerError } from '@presentation/errors';
+import { makeDefaultControllerGetAllCustomer as makeSut } from '@tests/customer/mocks/controller/default-controller-get-all-customer.mock';
 import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
-import { makeDbGetAllCustomerMock } from '@tests/customer/mocks/use-cases/db-get-all-customer.mock';
-import { ControllerGetAllCustomer } from './controller-get-all-customer';
-
-const makeSut = () => {
-  const { sut: getAllCustomer } = makeDbGetAllCustomerMock();
-  const sut = new ControllerGetAllCustomer(getAllCustomer);
-  return { sut, getAllCustomer };
-};
 
 describe('GetAllCustomerController', () => {
   it('1 - should return 200 with repository result', async () => {

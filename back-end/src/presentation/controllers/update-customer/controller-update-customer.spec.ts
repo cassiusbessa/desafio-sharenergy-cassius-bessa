@@ -1,27 +1,12 @@
 import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { httpRequest } from '@tests/customer/mocks/controller/http-update-customer.mock';
-import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
-import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
-import { makeDbUpdateCustomerMock } from '@tests/customer/mocks/use-cases/db-update-customer.mock';
 import {
   InvalidParamError,
   MissingParamError,
   NotFound,
   ServerError,
 } from '@presentation/errors';
-import { ControllerUpdateCustomer } from './controller-update-customer';
-
-const makeSut = () => {
-  const { sut: updateCustomer } = makeDbUpdateCustomerMock();
-  const { sut: customerValidator } = makeDefaultCustomerValidator();
-  const { sut: addressValidator } = makeDefaultAddressValidator();
-  const sut = new ControllerUpdateCustomer(
-    updateCustomer,
-    customerValidator,
-    addressValidator,
-  );
-  return { sut, updateCustomer, customerValidator, addressValidator };
-};
+import { makeDefaultControllerUpdateCustomer as makeSut } from '@tests/customer/mocks/controller/default-controller-update-customer.mock';
 
 describe('UpdateCustomerController', () => {
   it('1 - should return 400 if any parameters not provided', async () => {
