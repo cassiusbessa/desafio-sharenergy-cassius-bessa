@@ -9,4 +9,10 @@ describe('DeleteCustomerController', () => {
     expect(httpResponse.statusCode).toBe(404);
     expect(httpResponse.body).toEqual(new NotFound('Customer'));
   });
+  it('2 - should return 200 if customer is deleted', async () => {
+    const { sut, deleteCustomer } = makeSut();
+    jest.spyOn(deleteCustomer, 'delete').mockResolvedValueOnce(true);
+    const httpResponse = await sut.handle({ params: { id: 'any_id' } });
+    expect(httpResponse.statusCode).toBe(200);
+  });
 });
