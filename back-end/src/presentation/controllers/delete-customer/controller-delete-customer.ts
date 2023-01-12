@@ -1,6 +1,6 @@
 import { DeleteCustomer } from '@domain/use-cases/customer-use-cases/delete-customer';
 import { NotFound } from '@presentation/errors';
-import { notFound, serverError } from '@presentation/helpers/http-helper';
+import { notFound, ok, serverError } from '@presentation/helpers/http-helper';
 import { Controller, HttpRequest } from '@presentation/protocols';
 
 export class ControllerDeleteCustomer implements Controller {
@@ -14,5 +14,6 @@ export class ControllerDeleteCustomer implements Controller {
     if (!deleted) {
       return notFound(new NotFound('Customer'));
     }
+    return ok(deleted, 200, 'Customer deleted successfully');
   }
 }
