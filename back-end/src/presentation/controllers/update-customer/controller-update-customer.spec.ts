@@ -57,4 +57,16 @@ describe('UpdateCustomerController', () => {
     const { address } = httpRequest.body;
     expect(validateSpy).toHaveBeenCalledWith(address);
   });
+
+  it('5 - should return 400 if address update validate method returns false', async () => {
+    const { sut, addressValidator } = makeSut();
+    jest
+      .spyOn(addressValidator, 'updateValidate')
+      .mockReturnValueOnce({ result: false, message: 'any_message' });
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new InvalidParamError('address: any_message'),
+    );
+  });
 });
