@@ -6,7 +6,7 @@ import {
   MissingParamError,
   NotFound,
 } from '@presentation/errors';
-import { badRequest, notFound } from '@presentation/helpers/http-helper';
+import { badRequest, notFound, ok } from '@presentation/helpers/http-helper';
 import { HttpRequest } from '@presentation/protocols';
 
 export class ControllerUpdateCustomer {
@@ -50,5 +50,6 @@ export class ControllerUpdateCustomer {
     if (!customer) {
       return notFound(new NotFound('Customer'));
     }
+    return ok(customer, 200, 'Customer updated successfully');
   }
 }
