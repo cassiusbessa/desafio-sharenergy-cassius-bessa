@@ -2,14 +2,14 @@ import {
   MissingParamError,
   InvalidParamError,
   EmailInUseError,
-} from '../../errors';
+} from '@presentation/errors';
 import {
   badRequest,
   forbidden,
   ok,
   serverError,
-} from '../../helpers/http-helper';
-import { Controller, HttpRequest } from 'src/presentation/protocols';
+} from '@presentation/helpers/http-helper';
+import { Controller, HttpRequest } from '@presentation/protocols';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
 

@@ -7,7 +7,7 @@ import {
   InvalidParamError,
   EmailInUseError,
   ServerError,
-} from '../../errors';
+} from '@presentation/errors';
 import { ControllerRegisterCustomer } from './controller-register-costumer';
 
 const makeSut = () => {

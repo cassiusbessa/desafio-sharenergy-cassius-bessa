@@ -1,4 +1,4 @@
-import { defaultPersistenceCustomer } from './../../../tests/customer/mocks/entities/default-entitie.mock';
+import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { httpRequest } from '@tests/customer/mocks/controller/http-update-customer.mock';
 import { makeDefaultAddressValidator } from '@tests/customer/mocks/entities/validators/default-address-validator.mock';
 import { makeDefaultCustomerValidator } from '@tests/customer/mocks/entities/validators/default-customer-validator.mock';
@@ -8,7 +8,7 @@ import {
   MissingParamError,
   NotFound,
   ServerError,
-} from '../../errors';
+} from '@presentation/errors';
 import { ControllerUpdateCustomer } from './controller-update-customer';
 
 const makeSut = () => {
