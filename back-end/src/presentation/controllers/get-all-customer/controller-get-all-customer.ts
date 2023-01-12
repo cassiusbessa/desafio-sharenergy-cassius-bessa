@@ -7,7 +7,11 @@ export class ControllerGetAllCustomer {
     this.getAllCustomer = getAllCustomer;
   }
   async handle() {
-    const customer = await this.getAllCustomer.getAll();
-    return ok(customer, 200, 'Customer list successfully');
+    try {
+      const customer = await this.getAllCustomer.getAll();
+      return ok(customer, 200, 'Customer list successfully');
+    } catch (error) {
+      return serverError();
+    }
   }
 }
