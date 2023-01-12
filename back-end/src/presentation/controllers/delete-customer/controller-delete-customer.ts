@@ -9,11 +9,15 @@ export class ControllerDeleteCustomer implements Controller {
     this.deleteCustomer = deleteCustomer;
   }
   async handle(httpRequest: HttpRequest) {
-    const { id } = httpRequest.params;
-    const deleted = await this.deleteCustomer.delete(id);
-    if (!deleted) {
-      return notFound(new NotFound('Customer'));
+    try {
+      const { id } = httpRequest.params;
+      const deleted = await this.deleteCustomer.delete(id);
+      if (!deleted) {
+        return notFound(new NotFound('Customer'));
+      }
+      return ok(deleted, 200, 'Customer deleted successfully');
+    } catch (error) {
+      return serverError();
     }
-    return ok(deleted, 200, 'Customer deleted successfully');
   }
 }
