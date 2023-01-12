@@ -1,3 +1,4 @@
+import { httpRequest } from './../../../tests/customer/mocks/controller/http-register-customer.mock';
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
 import { UpdateCustomer } from '@domain/use-cases/customer-use-cases/update-customer';
 import { InvalidParamError, MissingParamError } from '@presentation/errors';
@@ -39,5 +40,8 @@ export class ControllerUpdateCustomer {
         new InvalidParamError('address: ' + isValidAddress.message),
       );
     }
+    const { id } = httpRequest.params;
+
+    const customer = await this.updateCustomer.update(httpRequest.body, id);
   }
 }
