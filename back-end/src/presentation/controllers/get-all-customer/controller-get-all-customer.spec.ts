@@ -1,3 +1,4 @@
+import { ServerError } from '@presentation/errors';
 import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { makeDbGetAllCustomerMock } from '@tests/customer/mocks/use-cases/db-get-all-customer.mock';
 import { ControllerGetAllCustomer } from './controller-get-all-customer';
@@ -20,5 +21,12 @@ describe('GetAllCustomerController', () => {
       data: [defaultPersistenceCustomer],
       message: 'Customer list successfully',
     });
+  });
+  it('2 - should return 500 if repository throws', async () => {
+    const { sut, getAllCustomer } = makeSut();
+    jest.spyOn(getAllCustomer, 'getAll').mockRejectedValueOnce(new Error());
+    const httpResponse = await sut.handle();
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 });
