@@ -11,7 +11,7 @@ import {
   ok,
   serverError,
 } from '@presentation/helpers/http-helper';
-import { HttpRequest } from '@presentation/protocols';
+import { HttpRequest, HttpResponse } from '@presentation/protocols';
 
 export class ControllerUpdateCustomer {
   private readonly updateCustomer: UpdateCustomer;
@@ -26,7 +26,7 @@ export class ControllerUpdateCustomer {
     this.updateCustomer = updateCustomer;
     this.customerValidator = customerValidator;
   }
-  async handle(httpRequest: HttpRequest) {
+  async handle(httpRequest: HttpRequest, httpResponse?: HttpResponse) {
     try {
       if (Object.keys(httpRequest.body).length === 0) {
         return badRequest(

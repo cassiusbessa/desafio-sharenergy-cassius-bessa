@@ -9,7 +9,7 @@ import {
   ok,
   serverError,
 } from '@presentation/helpers/http-helper';
-import { Controller, HttpRequest } from '@presentation/protocols';
+import { Controller, HttpRequest, HttpResponse } from '@presentation/protocols';
 import { RegisterCustomer } from '@domain/use-cases/customer-use-cases/register-customer';
 import { CustomerValidator, AddressValidator } from '@domain/protocols';
 
@@ -26,7 +26,7 @@ export class ControllerRegisterCustomer implements Controller {
     this.registerCustomer = registerCustomer;
     this.customerValidator = customerValidator;
   }
-  async handle(httpRequest: HttpRequest) {
+  async handle(httpRequest: HttpRequest, httpResponse?: HttpResponse) {
     try {
       const requiredFields = ['name', 'email', 'phone', 'cpf', 'address'];
       for (const field of requiredFields) {

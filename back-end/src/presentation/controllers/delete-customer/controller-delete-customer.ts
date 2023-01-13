@@ -1,14 +1,14 @@
 import { DeleteCustomer } from '@domain/use-cases/customer-use-cases/delete-customer';
 import { NotFound } from '@presentation/errors';
 import { notFound, ok, serverError } from '@presentation/helpers/http-helper';
-import { Controller, HttpRequest } from '@presentation/protocols';
+import { Controller, HttpRequest, HttpResponse } from '@presentation/protocols';
 
 export class ControllerDeleteCustomer implements Controller {
   private readonly deleteCustomer: DeleteCustomer;
   constructor(deleteCustomer: DeleteCustomer) {
     this.deleteCustomer = deleteCustomer;
   }
-  async handle(httpRequest: HttpRequest) {
+  async handle(httpRequest: HttpRequest, httpResponse?: HttpResponse) {
     try {
       const { id } = httpRequest.params;
       const deleted = await this.deleteCustomer.delete(id);
