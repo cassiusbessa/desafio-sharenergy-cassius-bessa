@@ -20,6 +20,6 @@ describe('GetAllCustomerController', () => {
     jest.spyOn(getAllCustomer, 'getAll').mockRejectedValueOnce(new Error());
     const httpResponse = await sut.handle();
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 });

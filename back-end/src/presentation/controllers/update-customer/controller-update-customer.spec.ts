@@ -16,9 +16,9 @@ describe('UpdateCustomerController', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new MissingParamError('Update must be at least one field'),
-    );
+    expect(httpResponse.body).toEqual({
+      message: 'Missing param: Update must be at least one field',
+    });
   });
 
   it('2 - should call customer update validate method with correct params', async () => {
@@ -36,9 +36,9 @@ describe('UpdateCustomerController', () => {
       .mockReturnValueOnce({ result: false, message: 'any_message' });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('customer: any_message'),
-    );
+    expect(httpResponse.body).toEqual({
+      message: 'Invalid param: customer: any_message',
+    });
   });
 
   it('4 - should call address update validate method with correct params', async () => {
@@ -56,9 +56,9 @@ describe('UpdateCustomerController', () => {
       .mockReturnValueOnce({ result: false, message: 'any_message' });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('address: any_message'),
-    );
+    expect(httpResponse.body).toEqual({
+      message: 'Invalid param: address: any_message',
+    });
   });
   it('6 - should call updateCustomer with correct params', async () => {
     const { sut, updateCustomer } = makeSut();
@@ -73,7 +73,7 @@ describe('UpdateCustomerController', () => {
     jest.spyOn(updateCustomer, 'update').mockReturnValueOnce(null);
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(404);
-    expect(httpResponse.body).toEqual(new NotFound('Customer'));
+    expect(httpResponse.body).toEqual({ message: 'Customer not found' });
   });
 
   it('8 - should return 200 if updateCustomer returns a customer', async () => {
@@ -96,7 +96,7 @@ describe('UpdateCustomerController', () => {
     });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 
   it('10 - should return 500 if customerValidator throws', async () => {
@@ -108,7 +108,7 @@ describe('UpdateCustomerController', () => {
       });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 
   it('11 - should return 500 if addressValidator throws', async () => {
@@ -120,6 +120,6 @@ describe('UpdateCustomerController', () => {
       });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 });

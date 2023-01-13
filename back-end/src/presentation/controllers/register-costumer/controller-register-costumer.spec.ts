@@ -20,7 +20,7 @@ describe('RegisterCostumerController', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('address'));
+    expect(httpResponse.body).toEqual({ message: 'Missing param: address' });
   });
 
   it('2 - should call customer validate method with correct params', async () => {
@@ -42,9 +42,9 @@ describe('RegisterCostumerController', () => {
       .mockReturnValueOnce({ result: false, message: 'any_message' });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('customer: any_message'),
-    );
+    expect(httpResponse.body).toEqual({
+      message: 'Invalid param: customer: any_message',
+    });
   });
 
   it('4 - shoud call address validate method with correct params', async () => {
@@ -68,9 +68,9 @@ describe('RegisterCostumerController', () => {
       .mockReturnValueOnce({ result: false, message: 'any_message' });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('address: any_message'),
-    );
+    expect(httpResponse.body).toEqual({
+      message: 'Invalid param: address: any_message',
+    });
   });
 
   it('6 - should call registerCustomer with correct params', async () => {
@@ -87,7 +87,9 @@ describe('RegisterCostumerController', () => {
       .mockReturnValueOnce(new Promise((resolve) => resolve(false)));
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(403);
-    expect(httpResponse.body).toEqual(new EmailInUseError());
+    expect(httpResponse.body).toEqual({
+      message: 'The received email is already in use',
+    });
   });
 
   it('8 - should return 201 if registerCustomer returns true', async () => {
@@ -108,7 +110,7 @@ describe('RegisterCostumerController', () => {
       );
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 
   it('10 - should return 500 if customerValidator throws', async () => {
@@ -118,7 +120,7 @@ describe('RegisterCostumerController', () => {
     });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 
   it('11 - should return 500 if addressValidator throws', async () => {
@@ -128,6 +130,6 @@ describe('RegisterCostumerController', () => {
     });
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse.body).toEqual({ message: 'Internal server error' });
   });
 });

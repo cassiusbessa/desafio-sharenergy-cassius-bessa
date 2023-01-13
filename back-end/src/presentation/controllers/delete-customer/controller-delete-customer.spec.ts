@@ -7,7 +7,7 @@ describe('DeleteCustomerController', () => {
     jest.spyOn(deleteCustomer, 'delete').mockResolvedValueOnce(false);
     const httpResponse = await sut.handle({ params: { id: 'any_id' } });
     expect(httpResponse.statusCode).toBe(404);
-    expect(httpResponse.body).toEqual(new NotFound('Customer'));
+    expect(httpResponse.body).toEqual({ message: 'Customer not found' });
   });
   it('2 - should return 200 if customer is deleted', async () => {
     const { sut, deleteCustomer } = makeSut();
