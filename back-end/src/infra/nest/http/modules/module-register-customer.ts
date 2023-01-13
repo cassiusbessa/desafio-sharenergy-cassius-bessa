@@ -1,28 +1,31 @@
-import { Module } from '@nestjs/common';
-import { NestControllerRegisterCustomer } from '../nest-controllers';
 import {
-  NestAddressValidator,
-  NestCpfValidator,
   NestEmailValidator,
+  NestCpfValidator,
   NestPhoneValidator,
   NestCustomerValidator,
-} from '../../providers';
+} from '@infra/nest/providers';
+import { Module } from '@nestjs/common';
+import { NestControllerRegisterCustomer } from '../nest-controllers';
 
 @Module({
   controllers: [NestControllerRegisterCustomer],
   providers: [
-    NestAddressValidator,
-    NestCpfValidator,
-    NestEmailValidator,
-    NestPhoneValidator,
-    NestCustomerValidator,
-  ],
-  exports: [
-    NestAddressValidator,
-    NestCpfValidator,
-    NestEmailValidator,
-    NestPhoneValidator,
-    NestCustomerValidator,
+    {
+      provide: 'EmailValidator',
+      useClass: NestEmailValidator,
+    },
+    {
+      provide: 'CpfValidator',
+      useClass: NestCpfValidator,
+    },
+    {
+      provide: 'PhoneValidator',
+      useClass: NestPhoneValidator,
+    },
+    {
+      provide: 'CustomerValidator',
+      useClass: NestCustomerValidator,
+    },
   ],
 })
 export class RegisterCustomerModule {}

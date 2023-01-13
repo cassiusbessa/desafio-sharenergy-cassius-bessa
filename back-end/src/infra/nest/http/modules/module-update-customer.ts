@@ -11,18 +11,22 @@ import {
 @Module({
   controllers: [NestControllerUpdateCustomer],
   providers: [
-    NestAddressValidator,
-    NestCpfValidator,
-    NestEmailValidator,
-    NestPhoneValidator,
-    NestCustomerValidator,
-  ],
-  exports: [
-    NestAddressValidator,
-    NestCpfValidator,
-    NestEmailValidator,
-    NestPhoneValidator,
-    NestCustomerValidator,
+    {
+      provide: 'EmailValidator',
+      useClass: NestEmailValidator,
+    },
+    {
+      provide: 'CpfValidator',
+      useClass: NestCpfValidator,
+    },
+    {
+      provide: 'PhoneValidator',
+      useClass: NestPhoneValidator,
+    },
+    {
+      provide: 'CustomerValidator',
+      useClass: NestCustomerValidator,
+    },
   ],
 })
 export class UpdateCustomerModule {}
