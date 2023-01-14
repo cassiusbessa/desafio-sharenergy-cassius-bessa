@@ -1,3 +1,3 @@
 export interface LoginValidator {
-  validate: (email: string, password: string) => boolean;
+  validate: (username: string, password: string) => boolean;
 }

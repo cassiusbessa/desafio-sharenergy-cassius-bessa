@@ -9,7 +9,7 @@ describe('LoginAdminController', () => {
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual({
-      message: 'Missing param: email',
+      message: 'Missing param: username',
     });
   });
   it('2 - should call LoginValidator with correct values', async () => {
@@ -17,19 +17,19 @@ describe('LoginAdminController', () => {
     const validateSpy = jest.spyOn(loginValidator, 'validate');
     const httpRequest = {
       body: {
-        email: 'any_email',
+        username: 'any_username',
         password: 'any_password',
       },
     };
     await sut.handle(httpRequest);
-    expect(validateSpy).toHaveBeenCalledWith('any_email', 'any_password');
+    expect(validateSpy).toHaveBeenCalledWith('any_username', 'any_password');
   });
   it('3 - should return 401 if LoginValidator returns false', async () => {
     const { sut, loginValidator } = makeSut();
     jest.spyOn(loginValidator, 'validate').mockReturnValueOnce(false);
     const httpRequest = {
       body: {
-        email: 'any_email',
+        username: 'any_username',
         password: 'any_password',
       },
     };
@@ -44,12 +44,12 @@ describe('LoginAdminController', () => {
     const loginSpy = jest.spyOn(loginAdmin, 'login');
     const httpRequest = {
       body: {
-        email: 'any_email',
+        username: 'any_username',
         password: 'any_password',
       },
     };
     await sut.handle(httpRequest);
-    expect(loginSpy).toHaveBeenCalledWith('any_email', 'any_password');
+    expect(loginSpy).toHaveBeenCalledWith('any_username', 'any_password');
   });
   it('5 - should return 500 if LoginAdmin throws', async () => {
     const { sut, loginAdmin } = makeSut();
@@ -58,7 +58,7 @@ describe('LoginAdminController', () => {
     });
     const httpRequest = {
       body: {
-        email: 'any_email',
+        username: 'any_username',
         password: 'any_password',
       },
     };
@@ -75,7 +75,7 @@ describe('LoginAdminController', () => {
     });
     const httpRequest = {
       body: {
-        email: 'any_email',
+        username: 'any_username',
         password: 'any_password',
       },
     };
@@ -89,7 +89,7 @@ describe('LoginAdminController', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        email: 'any_email',
+        username: 'any_username',
         password: 'any_password',
       },
     };

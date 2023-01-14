@@ -19,18 +19,18 @@ export class ControllerLoginAdmin implements Controller {
   }
   async handle(httpRequest: HttpRequest, httpResponse?: HttpResponse) {
     try {
-      const requiredFields = ['email', 'password'];
+      const requiredFields = ['username', 'password'];
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field));
         }
       }
-      const { email, password } = httpRequest.body;
-      const isValid = this.loginValidator.validate(email, password);
+      const { username, password } = httpRequest.body;
+      const isValid = this.loginValidator.validate(username, password);
       if (!isValid) {
         return unauthorized(new UnauthorizedError());
       }
-      const accessToken = await this.loginAdmin.login(email, password);
+      const accessToken = await this.loginAdmin.login(username, password);
       return ok({ accessToken }, 200, 'Login successful');
     } catch (error) {
       return serverError();
