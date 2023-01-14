@@ -74,6 +74,9 @@ export class AddressValidators implements AddressValidator {
   }
 
   updateValidate(address: Partial<AddressProps>): ValidatorResult {
+    if (!address || Object.keys(address).length === 0) {
+      return this.validatorResult;
+    }
     if (address.street) {
       this.validateStreetLength(address.street);
     }
