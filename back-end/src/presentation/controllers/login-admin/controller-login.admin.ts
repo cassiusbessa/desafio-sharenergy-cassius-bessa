@@ -25,5 +25,6 @@ export class ControllerLoginAdmin implements Controller {
     if (!isValid) {
       return unauthorized(new UnauthorizedError());
     }
+    const accessToken = await this.loginAdmin.login(email, password);
   }
 }
