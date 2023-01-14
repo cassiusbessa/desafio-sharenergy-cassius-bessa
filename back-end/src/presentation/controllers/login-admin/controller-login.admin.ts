@@ -1,5 +1,8 @@
-import { serverError } from './../../helpers/http-helper';
-import { unauthorized } from '@presentation/helpers/http-helper';
+import {
+  ok,
+  serverError,
+  unauthorized,
+} from '@presentation/helpers/http-helper';
 import { LoginValidator } from '@domain/protocols';
 import { LoginAdmin } from '@domain/use-cases/admin-use-cases/login-admin';
 import { Controller } from '@nestjs/common/interfaces';
@@ -28,6 +31,7 @@ export class ControllerLoginAdmin implements Controller {
         return unauthorized(new UnauthorizedError());
       }
       const accessToken = await this.loginAdmin.login(email, password);
+      return ok({ accessToken }, 200, 'Login successful');
     } catch (error) {
       return serverError();
     }
