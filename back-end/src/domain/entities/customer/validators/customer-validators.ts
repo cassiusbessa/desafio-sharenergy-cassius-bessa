@@ -64,6 +64,10 @@ export class CustomerValidators implements CustomerValidator {
   }
 
   validate(name: string, email: string, phone: string, cpf: string) {
+    this.validatorResult = {
+      result: true,
+      message: 'Valid',
+    };
     this.validateNameLength(name);
     this.validateEmail(email);
     this.validatePhone(phone);
@@ -72,6 +76,10 @@ export class CustomerValidators implements CustomerValidator {
   }
 
   updateValidate(name?: string, email?: string, phone?: string, cpf?: string) {
+    this.validatorResult = {
+      result: true,
+      message: 'Valid',
+    };
     if (name) {
       this.validateNameLength(name);
     }

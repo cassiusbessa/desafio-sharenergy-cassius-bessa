@@ -63,6 +63,10 @@ export class AddressValidators implements AddressValidator {
   }
 
   validate(address: AddressProps): ValidatorResult {
+    this.validatorResult = {
+      result: true,
+      message: 'Valid',
+    };
     this.validateStreetLength(address.street);
     this.validateNumberLength(address.number);
     this.validateCityLength(address.city);
@@ -74,6 +78,10 @@ export class AddressValidators implements AddressValidator {
   }
 
   updateValidate(address: Partial<AddressProps>): ValidatorResult {
+    this.validatorResult = {
+      result: true,
+      message: 'Valid',
+    };
     if (!address || Object.keys(address).length === 0) {
       return this.validatorResult;
     }
