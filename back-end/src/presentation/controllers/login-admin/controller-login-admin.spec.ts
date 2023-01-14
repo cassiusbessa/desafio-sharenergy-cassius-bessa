@@ -39,4 +39,16 @@ describe('LoginAdminController', () => {
       message: 'Unauthorized',
     });
   });
+  it('4 - should call LoginAdmin with correct values', async () => {
+    const { sut, loginAdmin } = defaultControllerLoginAdminMock();
+    const loginSpy = jest.spyOn(loginAdmin, 'login');
+    const httpRequest = {
+      body: {
+        email: 'any_email',
+        password: 'any_password',
+      },
+    };
+    await sut.handle(httpRequest);
+    expect(loginSpy).toHaveBeenCalledWith('any_email', 'any_password');
+  });
 });
