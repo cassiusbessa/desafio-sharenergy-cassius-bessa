@@ -24,4 +24,19 @@ describe('LoginAdminController', () => {
     await sut.handle(httpRequest);
     expect(validateSpy).toHaveBeenCalledWith('any_email', 'any_password');
   });
+  it('3 - should return 401 if LoginValidator returns false', async () => {
+    const { sut, loginValidator } = defaultControllerLoginAdminMock();
+    jest.spyOn(loginValidator, 'validate').mockReturnValueOnce(false);
+    const httpRequest = {
+      body: {
+        email: 'any_email',
+        password: 'any_password',
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(401);
+    expect(httpResponse.body).toEqual({
+      message: 'Unauthorized',
+    });
+  });
 });
