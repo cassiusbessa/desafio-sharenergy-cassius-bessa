@@ -11,7 +11,11 @@ export class AuthMiddleware implements Middleware {
   async handle(httpRequest: HttpRequest, httpResponse?: HttpResponse) {
     const { authorization } = httpRequest.headers;
     if (!authorization) {
-      return unauthorized(new UnauthorizedError());
+      return unauthorized(new UnauthorizedError('No token provided'));
+    }
+    const isValid = await this.tokenService.verifyToken(authorization);
+    if (!isValid) {
+      return unauthorized(new UnauthorizedError('Invalid token'));
     }
   }
 }
