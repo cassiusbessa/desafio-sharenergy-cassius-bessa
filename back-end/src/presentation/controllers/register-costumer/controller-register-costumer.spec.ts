@@ -1,10 +1,4 @@
 import { httpRequest } from '@tests/customer/mocks/controller/http-register-customer.mock';
-import {
-  MissingParamError,
-  InvalidParamError,
-  EmailInUseError,
-  ServerError,
-} from '@presentation/errors';
 import { makeDefaultControllerRegisterCustomer as makeSut } from '@tests/customer/mocks/controller/default-controller-register-customer.mock';
 
 describe('RegisterCostumerController', () => {

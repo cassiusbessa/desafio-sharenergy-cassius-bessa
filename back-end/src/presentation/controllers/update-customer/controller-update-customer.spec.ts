@@ -1,11 +1,5 @@
 import { defaultPersistenceCustomer } from '@tests/customer/mocks/entities/default-entitie.mock';
 import { httpRequest } from '@tests/customer/mocks/controller/http-update-customer.mock';
-import {
-  InvalidParamError,
-  MissingParamError,
-  NotFound,
-  ServerError,
-} from '@presentation/errors';
 import { makeDefaultControllerUpdateCustomer as makeSut } from '@tests/customer/mocks/controller/default-controller-update-customer.mock';
 
 describe('UpdateCustomerController', () => {
