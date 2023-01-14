@@ -4,11 +4,8 @@ import { MongoAddress, MongoAddressSchema } from './address-schema';
 
 export type CustomerDocument = HydratedDocument<MongoCustomerModel>;
 
-@Schema()
+@Schema({ collection: 'customers', versionKey: false })
 export class MongoCustomerModel {
-  @Prop()
-  id: string;
-
   @Prop({ required: true })
   name: string;
 
