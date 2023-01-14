@@ -4,8 +4,10 @@ import {
   UseCasesModule,
   NestRegisterCustomer,
   NestUpdateCustomer,
+  NestGetAllCustomer,
 } from '@infra/nest/providers/use-case';
 import {
+  NestControllerGetAllCustomer,
   NestControllerRegisterCustomer,
   NestControllerUpdateCustomer,
 } from '.';
@@ -19,7 +21,11 @@ import {
 
 @Module({
   imports: [UseCasesModule, RepositoriesModule],
-  controllers: [NestControllerRegisterCustomer, NestControllerUpdateCustomer],
+  controllers: [
+    NestControllerRegisterCustomer,
+    NestControllerUpdateCustomer,
+    NestControllerGetAllCustomer,
+  ],
   providers: [
     {
       provide: 'RegisterCustomer',
@@ -28,6 +34,10 @@ import {
     {
       provide: 'UpdateCustomer',
       useClass: NestUpdateCustomer,
+    },
+    {
+      provide: 'GetAllCustomer',
+      useClass: NestGetAllCustomer,
     },
     {
       provide: 'EmailValidator',
