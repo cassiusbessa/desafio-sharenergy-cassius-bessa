@@ -19,5 +19,7 @@ export class ControllerLoginAdmin implements Controller {
         return badRequest(new MissingParamError(field));
       }
     }
+    const { email, password } = httpRequest.body;
+    const isValid = this.loginValidator.validate(email, password);
   }
 }
