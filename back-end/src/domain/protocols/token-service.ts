@@ -1,6 +1,6 @@
 export interface TokenPayload {
   username: string;
-  password: string;
+  password?: string;
 }
 
 export interface TokenService {

@@ -1,6 +1,6 @@
 import { TokenService } from '@domain/protocols/token-service';
 import { UnauthorizedError } from '@presentation/errors';
-import { unauthorized } from '@presentation/helpers/http-helper';
+import { ok, unauthorized } from '@presentation/helpers/http-helper';
 import { HttpRequest, HttpResponse, Middleware } from '@presentation/protocols';
 
 export class AuthMiddleware implements Middleware {
@@ -17,5 +17,6 @@ export class AuthMiddleware implements Middleware {
     if (!isValid) {
       return unauthorized(new UnauthorizedError('Invalid token'));
     }
+    return ok(isValid, 200, 'Token verified');
   }
 }
