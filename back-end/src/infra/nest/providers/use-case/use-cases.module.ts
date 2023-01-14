@@ -4,11 +4,17 @@ import {
   NestRegisterCustomer,
   NestUpdateCustomer,
   NestGetAllCustomer,
+  NestDeleteCustomer,
 } from '.';
 
 @Module({
   imports: [RepositoriesModule],
-  providers: [NestRegisterCustomer, NestUpdateCustomer, NestGetAllCustomer],
+  providers: [
+    NestRegisterCustomer,
+    NestUpdateCustomer,
+    NestGetAllCustomer,
+    NestDeleteCustomer,
+  ],
   exports: [NestRegisterCustomer, NestUpdateCustomer, NestGetAllCustomer],
 })
 export class UseCasesModule {}

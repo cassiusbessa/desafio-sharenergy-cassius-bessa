@@ -5,11 +5,13 @@ import {
   NestRegisterCustomer,
   NestUpdateCustomer,
   NestGetAllCustomer,
+  NestDeleteCustomer,
 } from '@infra/nest/providers/use-case';
 import {
   NestControllerGetAllCustomer,
   NestControllerRegisterCustomer,
   NestControllerUpdateCustomer,
+  NestControllerDeleteCustomer,
 } from '.';
 import {
   NestEmailValidator,
@@ -25,6 +27,7 @@ import {
     NestControllerRegisterCustomer,
     NestControllerUpdateCustomer,
     NestControllerGetAllCustomer,
+    NestControllerDeleteCustomer,
   ],
   providers: [
     {
@@ -38,6 +41,10 @@ import {
     {
       provide: 'GetAllCustomer',
       useClass: NestGetAllCustomer,
+    },
+    {
+      provide: 'DeleteCustomer',
+      useClass: NestDeleteCustomer,
     },
     {
       provide: 'EmailValidator',
