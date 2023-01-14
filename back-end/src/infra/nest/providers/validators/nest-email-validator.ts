@@ -4,7 +4,6 @@ import { EmailValidator } from '@domain/protocols';
 @Injectable()
 export class NestEmailValidator implements EmailValidator {
   isValid(email: string): boolean {
-    console.log('validando email');
     const pattern = new RegExp(
       '^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$',
     );

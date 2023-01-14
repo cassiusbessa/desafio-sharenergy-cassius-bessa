@@ -52,9 +52,9 @@ export class ControllerRegisterCustomer implements Controller {
       if (!registered) {
         return forbidden(new EmailInUseError());
       }
-
       return ok(registered, 201, 'Customer registered successfully');
     } catch (error) {
+      console.error(error);
       return serverError();
     }
   }

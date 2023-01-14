@@ -24,7 +24,7 @@ export class MongoAddress {
   country: string;
 
   @Prop({ required: true })
-  zipCode: string;
+  zipcode: string;
 }
 
 export const MongoAddressSchema = SchemaFactory.createForClass(MongoAddress);
