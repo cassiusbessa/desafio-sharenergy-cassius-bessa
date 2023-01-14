@@ -5,14 +5,14 @@ export type AddressDocument = HydratedDocument<MongoAddress>;
 
 @Schema()
 export class MongoAddress {
-  @Prop()
-  id: string;
-
   @Prop({ required: true })
   street: string;
 
   @Prop({ required: true })
   number: string;
+
+  @Prop({ required: false })
+  complement: string;
 
   @Prop({ required: true })
   city: string;
