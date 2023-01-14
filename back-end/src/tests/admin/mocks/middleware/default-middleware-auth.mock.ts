@@ -6,7 +6,7 @@ export const defaultMiddlewareAuthMock = () => {
     async generateToken(payload: TokenPayload): Promise<string> {
       return 'any_token';
     }
-    async verifyToken(token: string): Promise<TokenPayload> {
+    async verifyToken(token: string): Promise<TokenPayload | false> {
       return { username: 'any_username', password: 'any_password' };
     }
   }
