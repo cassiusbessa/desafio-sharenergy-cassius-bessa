@@ -1,7 +1,8 @@
+import { unauthorized } from '@presentation/helpers/http-helper';
 import { LoginValidator } from '@domain/protocols';
 import { LoginAdmin } from '@domain/use-cases/admin-use-cases/login-admin';
 import { Controller } from '@nestjs/common/interfaces';
-import { MissingParamError } from '@presentation/errors';
+import { MissingParamError, UnauthorizedError } from '@presentation/errors';
 import { badRequest } from '@presentation/helpers/http-helper';
 import { HttpRequest, HttpResponse } from '@presentation/protocols';
 
@@ -21,5 +22,8 @@ export class ControllerLoginAdmin implements Controller {
     }
     const { email, password } = httpRequest.body;
     const isValid = this.loginValidator.validate(email, password);
+    if (!isValid) {
+      return unauthorized(new UnauthorizedError());
+    }
   }
 }
