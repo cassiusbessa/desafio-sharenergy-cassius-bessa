@@ -51,4 +51,38 @@ describe('LoginAdminController', () => {
     await sut.handle(httpRequest);
     expect(loginSpy).toHaveBeenCalledWith('any_email', 'any_password');
   });
+  it('5 - should return 500 if LoginAdmin throws', async () => {
+    const { sut, loginAdmin } = defaultControllerLoginAdminMock();
+    jest.spyOn(loginAdmin, 'login').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const httpRequest = {
+      body: {
+        email: 'any_email',
+        password: 'any_password',
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual({
+      message: 'Internal server error',
+    });
+  });
+  it('6 - should return 500 if LoginValidator throws', async () => {
+    const { sut, loginValidator } = defaultControllerLoginAdminMock();
+    jest.spyOn(loginValidator, 'validate').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const httpRequest = {
+      body: {
+        email: 'any_email',
+        password: 'any_password',
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual({
+      message: 'Internal server error',
+    });
+  });
 });
