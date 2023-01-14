@@ -12,6 +12,7 @@ export class ControllerGetAllCustomer implements Controller {
       const customer = await this.getAllCustomer.getAll();
       return ok(customer, 200, 'Customer list successfully');
     } catch (error) {
+      console.error(error);
       return serverError();
     }
   }

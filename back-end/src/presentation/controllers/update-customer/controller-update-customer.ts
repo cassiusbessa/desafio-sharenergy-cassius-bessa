@@ -52,13 +52,13 @@ export class ControllerUpdateCustomer {
         );
       }
       const { id } = httpRequest.params;
-
       const customer = await this.updateCustomer.update(httpRequest.body, id);
       if (!customer) {
         return notFound(new NotFound('Customer'));
       }
       return ok(customer, 200, 'Customer updated successfully');
     } catch (error) {
+      console.error(error);
       return serverError();
     }
   }

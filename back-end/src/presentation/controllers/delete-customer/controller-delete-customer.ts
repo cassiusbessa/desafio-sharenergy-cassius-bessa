@@ -17,6 +17,7 @@ export class ControllerDeleteCustomer implements Controller {
       }
       return ok(deleted, 200, 'Customer deleted successfully');
     } catch (error) {
+      console.error(error);
       return serverError();
     }
   }
