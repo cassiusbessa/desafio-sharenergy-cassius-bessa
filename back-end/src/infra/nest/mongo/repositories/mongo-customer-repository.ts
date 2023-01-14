@@ -24,12 +24,13 @@ export class MongoCustomerRepository implements CustomerRepository {
   async update(
     customer: CustomerProps,
     id: string,
-  ): Promise<PersistenceCustomer> {
+  ): Promise<PersistenceCustomer | false> {
     const updatedCustomer = await this.customerModel.findOneAndUpdate(
       { _id: id },
       customer,
       { new: true },
     );
+    if (!updatedCustomer) return false;
     return updatedCustomer.toObject();
   }
 
