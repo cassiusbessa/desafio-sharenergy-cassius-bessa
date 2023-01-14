@@ -28,4 +28,12 @@ describe('AuthMiddleware', () => {
       message: 'Invalid token',
     });
   });
+  it('4 - should return 200 if TokenService returns true', async () => {
+    const { sut, auth } = makeSut();
+    const token = 'valid_token';
+    const httpResponse = await sut.handle({
+      headers: { authorization: token },
+    });
+    expect(httpResponse.statusCode).toBe(200);
+  });
 });
