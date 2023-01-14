@@ -16,4 +16,16 @@ describe('AuthMiddleware', () => {
     await sut.handle({ headers: { authorization: token } });
     expect(verifyTokenSpy).toHaveBeenCalledWith(token);
   });
+  it('3 - should return 401 if TokenService returns false', async () => {
+    const { sut, auth } = makeSut();
+    const token = 'invalid_token';
+    jest.spyOn(auth, 'verifyToken').mockReturnValueOnce(Promise.resolve(false));
+    const httpResponse = await sut.handle({
+      headers: { authorization: token },
+    });
+    expect(httpResponse.statusCode).toBe(401);
+    expect(httpResponse.body).toEqual({
+      message: 'Invalid token',
+    });
+  });
 });
