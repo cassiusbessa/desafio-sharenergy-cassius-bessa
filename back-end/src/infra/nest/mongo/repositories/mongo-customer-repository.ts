@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CustomerRepository } from '@domain/repositories/customer-repository';
-import { CustomerDocument, MongoCustomer } from '../schemas';
+import { CustomerDocument, MongoCustomerModel } from '../schemas';
 import {
   CustomerProps,
   PersistenceCustomer,
@@ -11,7 +11,7 @@ import {
 @Injectable()
 export class MongoCustomerRepository implements CustomerRepository {
   constructor(
-    @InjectModel('Customer')
+    @InjectModel(MongoCustomerModel.name)
     private readonly customerModel: Model<CustomerDocument>,
   ) {}
 
