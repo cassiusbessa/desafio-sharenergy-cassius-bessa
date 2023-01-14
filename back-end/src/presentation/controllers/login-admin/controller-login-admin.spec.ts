@@ -12,4 +12,16 @@ describe('LoginAdminController', () => {
       message: 'Missing param: email',
     });
   });
+  it('2 - should call LoginValidator with correct values', async () => {
+    const { sut, loginValidator } = defaultControllerLoginAdminMock();
+    const validateSpy = jest.spyOn(loginValidator, 'validate');
+    const httpRequest = {
+      body: {
+        email: 'any_email',
+        password: 'any_password',
+      },
+    };
+    await sut.handle(httpRequest);
+    expect(validateSpy).toHaveBeenCalledWith('any_email', 'any_password');
+  });
 });
