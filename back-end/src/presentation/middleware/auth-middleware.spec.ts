@@ -6,7 +6,14 @@ describe('AuthMiddleware', () => {
     const httpResponse = await sut.handle({ headers: {} });
     expect(httpResponse.statusCode).toBe(401);
     expect(httpResponse.body).toEqual({
-      message: 'Unauthorized',
+      message: 'No token provided',
     });
+  });
+  it('2 - should call TokenService with correct token', async () => {
+    const { sut, auth } = makeSut();
+    const token = 'any_token';
+    const verifyTokenSpy = jest.spyOn(auth, 'verifyToken');
+    await sut.handle({ headers: { authorization: token } });
+    expect(verifyTokenSpy).toHaveBeenCalledWith(token);
   });
 });
