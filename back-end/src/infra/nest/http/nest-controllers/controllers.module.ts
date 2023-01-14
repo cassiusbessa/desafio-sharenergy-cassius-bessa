@@ -6,12 +6,14 @@ import {
   NestUpdateCustomer,
   NestGetAllCustomer,
   NestDeleteCustomer,
+  NestLoginAdmin,
 } from '@infra/nest/providers/use-case';
 import {
   NestControllerGetAllCustomer,
   NestControllerRegisterCustomer,
   NestControllerUpdateCustomer,
   NestControllerDeleteCustomer,
+  NestControllerLoginAdmin,
 } from '.';
 import {
   NestEmailValidator,
@@ -19,6 +21,7 @@ import {
   NestPhoneValidator,
   NestCustomerValidator,
   NestAddressValidator,
+  NestLoginAdminValidator,
 } from '@infra/nest/providers/validators';
 
 @Module({
@@ -28,6 +31,7 @@ import {
     NestControllerUpdateCustomer,
     NestControllerGetAllCustomer,
     NestControllerDeleteCustomer,
+    NestControllerLoginAdmin,
   ],
   providers: [
     {
@@ -45,6 +49,10 @@ import {
     {
       provide: 'DeleteCustomer',
       useClass: NestDeleteCustomer,
+    },
+    {
+      provide: 'LoginAdmin',
+      useClass: NestLoginAdmin,
     },
     {
       provide: 'EmailValidator',
@@ -65,6 +73,10 @@ import {
     {
       provide: 'AddressValidator',
       useClass: NestAddressValidator,
+    },
+    {
+      provide: 'LoginValidator',
+      useClass: NestLoginAdminValidator,
     },
   ],
 })

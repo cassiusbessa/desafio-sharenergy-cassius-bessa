@@ -5,6 +5,7 @@ import {
   NestUpdateCustomer,
   NestGetAllCustomer,
   NestDeleteCustomer,
+  NestLoginAdmin,
 } from '.';
 
 @Module({
@@ -14,7 +15,14 @@ import {
     NestUpdateCustomer,
     NestGetAllCustomer,
     NestDeleteCustomer,
+    NestLoginAdmin,
   ],
-  exports: [NestRegisterCustomer, NestUpdateCustomer, NestGetAllCustomer],
+  exports: [
+    NestRegisterCustomer,
+    NestUpdateCustomer,
+    NestGetAllCustomer,
+    NestDeleteCustomer,
+    NestLoginAdmin,
+  ],
 })
 export class UseCasesModule {}
