@@ -6,6 +6,7 @@ import {
   NestGetAllCustomer,
   NestDeleteCustomer,
   NestLoginAdmin,
+  NestAdminTokenValidate,
 } from '.';
 
 @Module({
@@ -16,6 +17,7 @@ import {
     NestGetAllCustomer,
     NestDeleteCustomer,
     NestLoginAdmin,
+    NestAdminTokenValidate,
   ],
   exports: [
     NestRegisterCustomer,
@@ -23,6 +25,7 @@ import {
     NestGetAllCustomer,
     NestDeleteCustomer,
     NestLoginAdmin,
+    NestAdminTokenValidate,
   ],
 })
 export class UseCasesModule {}
