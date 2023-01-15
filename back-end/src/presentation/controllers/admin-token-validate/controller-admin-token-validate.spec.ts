@@ -17,4 +17,12 @@ describe('AdminTokenValidateController', () => {
     });
     expect(httpResponse.statusCode).toBe(401);
   });
+
+  it('3 - should return 200 if token is valid', async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.handle({
+      headers: { authorization: 'any_token' },
+    });
+    expect(httpResponse.statusCode).toBe(200);
+  });
 });
