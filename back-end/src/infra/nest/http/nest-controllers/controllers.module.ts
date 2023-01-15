@@ -7,6 +7,7 @@ import {
   NestGetAllCustomer,
   NestDeleteCustomer,
   NestLoginAdmin,
+  NestAdminTokenValidate,
 } from '@infra/nest/providers/use-case';
 import {
   NestControllerGetAllCustomer,
@@ -23,6 +24,7 @@ import {
   NestAddressValidator,
   NestLoginAdminValidator,
 } from '@infra/nest/providers/validators';
+import { NestControllerTokenValidatorAdmin } from './nest-controller-token-validator-admin';
 
 @Module({
   imports: [UseCasesModule, RepositoriesModule],
@@ -32,6 +34,7 @@ import {
     NestControllerGetAllCustomer,
     NestControllerDeleteCustomer,
     NestControllerLoginAdmin,
+    NestControllerTokenValidatorAdmin,
   ],
   providers: [
     {
@@ -77,6 +80,10 @@ import {
     {
       provide: 'LoginValidator',
       useClass: NestLoginAdminValidator,
+    },
+    {
+      provide: 'TokenValidatorAdmin',
+      useClass: NestAdminTokenValidate,
     },
   ],
 })
