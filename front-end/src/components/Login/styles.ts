@@ -21,4 +21,16 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: 'rgb(0, 142, 142)',
     }
   },
+  remember: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  checkbox: {
+    color: 'rgb(214, 223, 39)',
+    '&$checked': {
+      color: 'rgb(214, 223, 39)'
+    }
+  },
+  checked: {}
 }));
