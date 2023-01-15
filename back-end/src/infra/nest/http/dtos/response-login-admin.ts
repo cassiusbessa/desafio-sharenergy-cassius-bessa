@@ -9,7 +9,7 @@ export class ResponseLoginAdmin {
 
   @ApiProperty({
     description: 'Token de acesso',
-    example: 'token',
+    example: { accesToken: 'token' },
   })
   data: {
     accessToken: string;
