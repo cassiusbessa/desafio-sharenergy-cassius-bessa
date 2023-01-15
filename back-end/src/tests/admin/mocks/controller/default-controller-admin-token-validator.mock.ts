@@ -7,7 +7,7 @@ export const defaultControllerAdminTokenValidatorMock = () => {
       return true;
     }
   }
-  const tokenService = new TokenServiceMock();
-  const sut = new ControllerAdminTokenValidator(tokenService);
-  return { sut, tokenService };
+  const tokenServiceMock = new TokenServiceMock();
+  const sut = new ControllerAdminTokenValidator(tokenServiceMock);
+  return { sut, tokenServiceMock };
 };

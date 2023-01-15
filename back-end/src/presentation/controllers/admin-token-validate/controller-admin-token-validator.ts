@@ -11,5 +11,9 @@ export class ControllerAdminTokenValidator implements Controller {
     if (!authorization) {
       return unauthorized(new UnauthorizedError('No token provided'));
     }
+    const isValid = await this.adminTokenValidate.validate(authorization);
+    if (!isValid) {
+      return unauthorized(new UnauthorizedError('Invalid token'));
+    }
   }
 }
