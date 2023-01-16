@@ -1,37 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    backgroundColor: "white",
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appbar: {
-    position: 'fixed',
-    top: 0,
-    width: '100%',
-  },
-  logout: {
-    background: "rgb(0, 162, 162)",
-    color: "#fff"
-  }
-}));
+import { useStyles } from './styles';
 
 export default function Header() {
   const classes = useStyles();
