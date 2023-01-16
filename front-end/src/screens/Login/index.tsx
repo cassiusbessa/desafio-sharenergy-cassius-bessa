@@ -4,9 +4,11 @@ import { Container, Grid, TextField, Button, Typography } from '@material-ui/cor
 import { useNavigate  } from "react-router-dom";
 import { useStyles } from './styles';
 import { clearToken, login, setSessionToken, setToken } from "../../apis/main-api";
+import { useAuthCheck } from '../../utils/validate-token';
 
 
 export default function Login() {
+  useAuthCheck();
   const classes = useStyles();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');

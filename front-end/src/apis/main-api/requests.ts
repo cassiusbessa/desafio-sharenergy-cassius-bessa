@@ -1,7 +1,7 @@
 import { LoginRequest, LoginOkResponse } from "../../interfaces/";
 
 export const login = async (admin: LoginRequest): Promise<LoginOkResponse> => {
-  const response =  await fetch('http://localhost:3001/admin/login', {
+  const response =  await fetch('http://localhost:3001/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
