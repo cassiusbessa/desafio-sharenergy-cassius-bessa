@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { Container, Grid, TextField, Button, Typography } from '@material-ui/core';
 import { useNavigate  } from "react-router-dom";
 import { useStyles } from './styles';
-import { login } from "../../apis/main-api";
+import { clearToken, login, setSessionToken, setToken } from "../../apis/main-api";
 
 
 export default function Login() {
@@ -15,10 +15,10 @@ export default function Login() {
 
   const adminRemember = (remember: boolean, token: string) => {
     if (remember) {
-      localStorage.setItem("token", token);
+      setToken(token);
     } else {
-      sessionStorage.setItem("token", token);
-      localStorage.removeItem("token");
+      setSessionToken(token);
+      clearToken();
     }
   }
 
@@ -27,7 +27,6 @@ export default function Login() {
       const loginResponse = (await login({username, password}));
       console.log(loginResponse)
       const token = loginResponse.data.accessToken;
-      console.log(token);
       adminRemember(remember, token);
       navigate("/home");
   };
