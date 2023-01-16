@@ -25,7 +25,6 @@ export default function Login() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
       const loginResponse = (await login({username, password}));
-      console.log(loginResponse)
       const token = loginResponse.data.accessToken;
       adminRemember(remember, token);
       navigate("/home");
