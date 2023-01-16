@@ -1,5 +1,5 @@
 export interface RandomUser {
-  fullName: string;
+  name: string;
   picture: string;
   username: string;
   email: string;
