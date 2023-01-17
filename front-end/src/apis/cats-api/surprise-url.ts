@@ -1,0 +1,1 @@
+export const surpriseUrl = 'https://hqscomcafe.com.br/wp-content/uploads/2021/02/Errou-Meme-Faustao.jpg'
