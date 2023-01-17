@@ -4,9 +4,15 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from './styles';
+import { useNavigate  } from "react-router-dom";
 
 export default function Header() {
   const classes = useStyles();
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <div className={classes.root}>
@@ -18,10 +24,10 @@ export default function Header() {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button color="inherit">Gatinhos</Button>
-            <Button color="inherit">Doguinhos</Button>
-            <Button color="inherit">Customers</Button>
-            <Button color="inherit">Home</Button>
+            <Button color="inherit" onClick={() => handleNavigate("/cat")}>Gatíneos</Button>
+            <Button color="inherit" onClick={() => handleNavigate("/dog")}>Doguineos</Button>
+            <Button color="inherit" onClick={() => handleNavigate("/client")}>Customers</Button>
+            <Button color="inherit" onClick={() => handleNavigate("/home")}>Home</Button>
             <Button className={classes.logout} color="inherit">Logout</Button>
           </Grid>
         </Grid>
