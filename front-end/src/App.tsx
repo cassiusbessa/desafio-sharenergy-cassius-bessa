@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CatStatusCodePage from './screens/Cats';
 import Home from './screens/Home/Home';
 import Login from './screens/Login';
 
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/cat" element={<CatStatusCodePage />} />
       </Routes>
     </BrowserRouter>
 
