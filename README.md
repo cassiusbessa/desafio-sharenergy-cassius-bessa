@@ -18,7 +18,7 @@ $ cd back-end
 ```
 
 ```bash
-$ npm install
+$ npm install --force
 ```
 
 ```bash
@@ -36,7 +36,7 @@ $ cd front-end
 ```
 
 ```bash
-$ npm install
+$ npm install --force
 ```
 
 ```bash
