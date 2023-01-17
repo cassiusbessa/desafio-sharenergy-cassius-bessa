@@ -6,8 +6,10 @@ import Header from "../../components/Header";
 import UserAlbumCard from "../../components/UserAlbumCard";
 import { RandomUser } from "../../interfaces/random-user";
 import { useAuthCheck } from "../../utils/validate-token";
+import { useStyles } from './styles';
 
 export default function Home() {
+  const classes = useStyles();
   const [randomUsers, setRandomUsers] = useState<RandomUser[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<RandomUser[]>([]);
@@ -42,24 +44,29 @@ export default function Home() {
 
 
   return (
-    <div>
+    <>
       <Header />
-      <TextField
-        label="Search"
-        variant="outlined"
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
-      />
-      <h1>Home</h1>
-      <UserAlbumCard users={filteredUsers} />
-      <Button 
-      variant="contained" 
-      color="primary" 
-      endIcon={<ArrowRightIcon />}
-      onClick={handleLoadMore}
-    >
-      Load More
-    </Button>
+      <div className={classes.root}>
+        <div className={classes.formContainer}>
+          <TextField
+            className={classes.textField}
+            label="Search"
+            variant="outlined"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
+          <Button 
+          className={classes.button}
+          variant="contained" 
+          color="primary" 
+          endIcon={<ArrowRightIcon />}
+          onClick={handleLoadMore}
+        >
+          Load More
+        </Button>
+        </div>
+        <UserAlbumCard users={filteredUsers} />
     </div>
+  </>
   );
 }

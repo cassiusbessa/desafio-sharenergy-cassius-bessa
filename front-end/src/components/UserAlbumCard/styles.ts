@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     margin: '0 auto',
     maxWidth: '80%',
+    maxHeight: '70%',
   },
   cardContainer: {
     display: 'flex',
